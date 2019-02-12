@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Title, Favicon -->
+		<title>Slugroad</title>
+		<link rel="shortcut icon" href="favicon.png" type="image/x-icon">		
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="theme_bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="theme_animista.css">
+		<link rel="stylesheet" type="text/css" href="theme_slugroad.css">		
+	</head>
+	
+	<body align="center">
+		<!-- TITLE -->
+		<div class="info img-border2">
+			<div class="row">
+				<div class="col-sm">
+					<h1 align="left">SLUGROAD</h1>
+				</div>
+				<div class="col-sm" align="right">
+					<a href="#info"><img height="48" src="img/question_circle.png"></a>
+					<a href="https://ropsten.etherscan.io/address/0x5d73fc88197397988d12d09ba8142d8ebd59172f" target="_blank"><img height="48" src="img/contract_circle.png"></a>
+					<a href="https://discord.gg/JU8P4Ru" target="_blank"><img height="48" src="img/discord_circle.png"></a>
+					<a href="https://twitter.com/EtherSnailFarm" target="_blank"><img height="48" src="img/twitter_circle.png"></a>
+					<a href="https://reddit.com/r/snailthrone" target="_blank"><img height="48" src="img/reddit_circle.png"></a>
+					<a href="" target="_blank"><img height="48" src="img/medium_circle.png"></a>
+					<a href="https://t.me/snailthrone" target="_blank"><img height="48" src="img/telegram_circle.png"></a>
+					<a href="https://snailking.github.io/snailthrone" target="_blank"><img height="48" src="img/snailthrone_circle.png"></a>
+				</div>
+			</div>
+		</div><br>
+		<!-- CAR WINDOW -->
+		<div class="container road-background black-shadow img-border" align="center">
+			<h3>Round <span id="round">1</span></h3>
+			<h1><span id="roundpot">23.48</span> ETH</h3><br>
+			<div class="row">
+				<div class="col-sm">
+					<h5><span id="hyperstate">Entering Hyperspeed in:</span></h4>
+					<h1><span id="timer">4:24:40</span></h2><br>
+				</div>
+				<div class="col-sm">
+					<h5>Current speed:</h4>
+					<h1><span id="speed">245.34 MPH</span></h2><br>
+				</div>
+			</div>
+			<h3><span id="driver">0x1234abcd</span> <span id="driverstate">holds the wheel!<br> Distance driven: 145668 miles</span></h4>			
+		</div>
+		<div class="container black-shadow" align="center">
+			<h1>GET OR THROW 200 SLUGS TO BECOME THE DRIVER</h1>
+		</div>
+		<!-- GET / OWN / HATCH -->
+		<div class="container" align="center">
+			<div class="row">
+				<div class="col-sm img-border2 info">
+					<h2>BUY SLUGS</h2><br>
+					<h5>200 slugs for <span id="buy200">0.211</span> ETH</h5>
+					<h5><input type="text" id="fieldBuy" value="0.1" size="4"> ETH</h5>
+					<h5>You will get <span id="fieldBuySlug">200</span> slugs</h5><br>
+					<button class="btn btn-lg btn-info">BUY SLUGS</button>
+				</div>
+				<div class="col-sm img-border2 info2">
+					<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button></span><br>
+					<h2>You own <span id="playerslug">10400</span> Slugs</h3><br><br>
+					<h2>You won <span id="playerbalance">0.345</span> ETH</h3>
+					<button class="btn btn-lg btn-info">WITHDRAW</button>
+				</div>
+				<div class="col-sm img-border2 info">
+					<h2>SKIP TIME</h2><br>
+					<h5>200 slugs for <span id="time200">0.154</span> ETH</h5>
+					<h5>You will get <span id="timeGetSlug">544</span> slugs</h5><br><br>
+					<button class="btn btn-lg btn-info">SKIP TIME</button>
+				</div>
+			</div>
+		</div><br>
+		<!-- TRAVELED -->
+		<h1 align="center" class="black-shadow">YOU DROVE FOR <span id="playermile">3450</span> MILES</h1>
+		<div class="container" align="center">
+			<div class="info2 img-border2 max600">
+				<h5>For every 6000 miles, get <span id="trade6000mile">0.045</span> ETH</h5>
+				<button class="btn btn-lg btn-info">TRADE MILES</button>
+			</div>
+		</div><br>
+		<!-- LOG -->
+		<div class="container img-border info">
+			<div class="row">
+				<div class="col-sm">
+					<h3>EVENTS</h3>
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-info">Get Past Events</button>
+				</div>
+			</div>
+			<div class="scroll-box" id="logboxscroll">
+				<p><span id="event">[Waiting for events...]</span></p>
+			</div>
+		</div><br>
+		<!-- STATS -->
+		<div class="container img-border info2">
+			<h3>STATS</h3><br>
+			<h5><span id="maxslug">345340</span> slugs alive</h5>
+			<h5><span id="contractbalance">46.66</span> ETH in contract</h5>
+			<h5>30495 miles driven</h5>
+			<h5>4568 slugs thrown</h5>
+			<h5>34 drivers</h5>
+			<h5>20 ETH won</h5>
+			<h5>This trip started 7 days 48 minutes ago</h5>
+		</div><br>
+		<!-- JAVASCRIPT -->
+		<script src="slugroad.js"></script>				
+		<script>
+			initUpdate();
+		</script>		
+	</body>
+</html>

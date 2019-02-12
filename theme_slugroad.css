@@ -1,0 +1,270 @@
+/* Colors used
+#448cff
+*/
+
+/* Body goes first */
+body {
+	background-image: url("img/retro_bg_1.png");
+	background-color: #448cff;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	color: #ffffff;
+}
+
+/* Required for mobile */
+@media only screen and (max-width:900px), (max-device-width:900px){
+body:before {
+  content: "";
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: url("img/retro_bg_1.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+}
+
+/* Maxwidth 600 */
+.max600{
+	max-width: 600px;
+}
+
+/* Roaddrive background */
+.road-background{
+	background-image: url("img/maxresdefault.jpg");
+	background-size: cover;
+	background-position: center;
+	max-width: 800px;
+	max-height: 600px;
+}
+
+/* Info container */
+
+.info{
+	background-color: #122747;
+}
+
+.info2{
+	background-color: #283c5b;
+}
+
+/* Vertical align? */
+
+.bottom-align {
+  vertical-align: bottom;
+}
+
+/* Snail containers */
+
+.snail{
+	background-color: #eddbaa;
+	border: 4px solid;
+	border-image: url("img/border_5.png") 48 round;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 128px;
+	margin: 4px;
+	padding: 4px;
+}
+
+/* White text with black shadow for contrast */
+
+.black-shadow {
+	color: white;
+	text-shadow:
+	-1px -1px 0 #000,  
+	1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+/* Image border */
+
+.img-border {
+	border: 32px solid;
+	border-image: url("img/border_5.png") 32 round;
+}
+
+.img-border2 {
+	border: 8px solid;
+	border-image: url("img/border_5.png") 16 round;
+	margin: 4px;
+}
+
+/* Egg and ether backgrounds */
+
+.egg{
+	background-image: url("img/egg.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 128px;
+}
+
+.ether{
+	background-image: url("img/ether_brown.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 128px;
+}
+
+a {
+	color: black;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+p {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+.testimonial{
+	height: 128px;
+	border: 4px solid #FFFFFF;
+}
+
+.container-poem{
+	margin-left: 6rem;
+	margin-right: 6rem;
+}
+
+.jumbotron {
+	background-color: #000000;
+	position: center;
+	margin-left: auto;
+	margin-right: auto;
+	border: 32px solid;
+	border-image: url("img/border_5.png") 32 round;
+	padding: 1rem 1rem;
+	margin-bottom: 0.5rem;
+	border-radius: 0.2rem;
+}
+
+@media (min-width: 576px) {
+  .jumbotron {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .jumbotron {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .jumbotron{
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .jumbotron{
+    max-width: 1140px;
+  }
+}
+
+.border6{
+	border-image: url("img/border_6.png") 48 round;
+}
+
+
+
+.container-social {
+	background-color: #8eb6bf;
+	color: black;
+	position: center;
+	padding: 0.5rem 0.5rem;
+}
+
+.black-shadow {
+	color: white;
+	text-shadow:
+	-1px -1px 0 #000,  
+	1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.scroll-box {
+	width: 100%; 
+	overflow: auto; 
+	overflow-x: hidden; 
+	height: 128px;
+}
+
+.btn {
+	color: #000000;
+	border: 4px solid;
+	border-image: url("img/border_5.png") 16 round;
+}
+
+/* Green outline remover */
+.btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #a45436;
+  border-color: #1e7e34;
+  outline: 0;
+}
+
+.leader-style {
+	font-size: 1.25rem;
+}
+
+.wonkers-container {
+	background-image: url("img/pile_nuts_2.png");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* Modal (from W3Schools) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 200px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    width: 100%;
+	max-width: 960px;
+}
+
+/* The Close Button */
+.close {
+    font-size: 16px;
+    font-weight: bold;
+	color: white;
+	vertical-align: text-top;
+    float: right;
+}
+
+.close:hover,
+.close:focus {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
