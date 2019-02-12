@@ -1,4 +1,4 @@
-var contractAddress="0x5d73fc88197397988d12d09ba8142d8ebd59172f"; //ROPSTEN v1
+var contractAddress="0x6cf592d1687041147a20c6cc1504715864a52752"; //ROPSTEN v1
 
 //-- WEB3 DETECTION --//
 var web3;
@@ -24,7 +24,7 @@ window.addEventListener('load', async () => {
     }
     // Non-dapp browsers...
     else {
-        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+        ////console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
 });
 /* MODAL */
@@ -82,7 +82,8 @@ var a_getCost;
 var a_playerSlug;
 var a_playerBalance;
 var a_playerMile;
-var a_tradeMile;
+var a_trade6000;
+var a_mileReward;
 
 var s_hyperState = 0; //0: no hyperspeed, 1: hyperspeed, 2: round over
 
@@ -108,6 +109,7 @@ var doc_playerMile = document.getElementById('playermile');
 var doc_time200 = document.getElementById('time200');
 var doc_timeGetSlug = document.getElementById('timeGetSlug');
 var doc_trade6000Mile = document.getElementById('trade6000mile');
+var doc_mileReward = document.getElementById('milereward');
 var doc_maxSlug = document.getElementById('maxslug');
 var doc_actionState = document.getElementById('actionstate');
 
@@ -147,7 +149,7 @@ function date24() {
 //Get timestamp for log
 function dateLog(_blockNumber) {
 	d = new Date((timeLaunch + ((_blockNumber - launchBlock) * 16)) * 1000);
-	//console.log(d);
+	//////console.log(d);
 	datetext = d.toTimeString();
 	datetext = datetext.split(' ')[0];
 }
@@ -157,6 +159,7 @@ function dateLog(_blockNumber) {
 function initUpdate(){
 	mainUpdate();
 	fastUpdate();
+	veryFastUpdate();
 }	
 
 function mainUpdate(){
@@ -168,6 +171,14 @@ function mainUpdate(){
 	updateThronePot();
 	updateDriver();
 	updateDriverMile();
+	updateEtherDrained();
+	updateBuySlugCost();
+	updateGetSlugCost();
+	updatePlayerSlug();
+	updatePlayerMile();
+	updatePlayerBalance();
+	updateTrade6000Reward();
+	updateMileReward();
 	updateTimer();
 	updateText();
 	setTimeout(mainUpdate, 4000);
@@ -176,6 +187,11 @@ function mainUpdate(){
 function fastUpdate(){
 	updateLocalTimer();
 	setTimeout(fastUpdate, 1000);
+}
+
+function veryFastUpdate(){
+	updateFieldBuy();
+	setTimeout(veryFastUpdate, 200);
 }
 
 //Updates all text from web3 calls
@@ -191,7 +207,8 @@ function updateText(){
 	doc_playerBalance.innerHTML = a_playerBalance;
 	doc_playerMile.innerHTML = a_playerMile;
 	doc_time200.innerHTML = a_getCost * 200;
-	doc_trade6000Mile.innerHTML = a_tradeMile;
+	doc_trade6000Mile.innerHTML = a_trade6000;
+	doc_mileReward.innerHTML = a_mileReward;
 	doc_maxSlug.innerHTML = a_maxSlug;
 	
 	if(a_driver == m_account){
@@ -319,6 +336,13 @@ function updateDriverMile(){
 		a_driverMile = result;
 	});
 }
+
+//Current ether drained
+function updateEtherDrained(){
+	ComputeHyperReward(function(result) {
+		a_etherDrained = formatEthValue2(web3.fromWei(result,'ether'));
+	});
+}
 		
 //Current player balance
 function updatePlayerBalance(){
@@ -341,75 +365,84 @@ function updatePlayerMile(){
 	});
 }
 
-
-//Change snail owner text
-function changeSnailOwnerText(_id){
-	if(a_snailOwner[_id] == m_account){
-		doc_snailOwner[_id].innerHTML = "YOU!";
-	} else {
-		doc_snailOwner[_id].innerHTML = formatEthAdr(a_snailOwner[_id]);
-	}
-}
-
-//Update snail cost
-function updateSnailCost(_id){
-	a_snailCost[_id] = (a_snailLevel[_id] + 1) * 0.01;
-}
-
-//Change text
-function changeText(_id, _doc, _a){
-	_doc[_id].innerHTML = _a[_id];
-}
-
-//Check lord cost
-function checkLordCost(_id){
-	ComputeLordCost(_id, function(result) {
-		a_lordCost[_id] = formatEthValue(web3.fromWei(result,'ether'));
+//Current max slug
+function updateMaxSlug(){
+	maxSlug(function(result) {
+		a_maxSlug = result;
 	});
 }
 
-//Check lord owner
-function checkLordOwner(_id){
-	GetLordOwner(_id, function(result) {
-		a_lordOwner[_id] = "0x" + result.substring(26, 66);
+//Current cost for buying slugs
+function updateBuySlugCost(){
+	ComputeSlugCost(true, function(result) {
+		a_buyCost =	formatEthValue2(web3.fromWei(result,'ether'));
 	});
 }
 
-//Change lord owner text
-function changeLordOwnerText(_id){
-	if(a_lordOwner[_id] == m_account){
-		doc_lordOwner[_id].innerHTML = "YOU!";
-	} else {
-		doc_lordOwner[_id].innerHTML = formatEthAdr(a_lordOwner[_id]);
-	}
+//Current cost for getting slugs through time
+function updateGetSlugCost(){
+	ComputeSlugCost(false, function(result) {
+		a_buyCost =	formatEthValue2(web3.fromWei(result,'ether'));
+	});
+}
+
+//Current reward for trading 6000 miles
+function updateTrade6000Reward(){
+	ComputeMileReward(1, function(result) {
+		a_mileReward = formatEthValue2(web3.fromWei(result,'ether'));
+	});
+}
+
+//Current reward for trading player miles
+function updateMileReward(){
+	ComputeMileReward(parseInt(a_playerMile / 6000), function(result) {
+		a_mileReward = formatEthValue2(web3.fromWei(result,'ether'));
+	});
+}
+
+/* LOCAL FIELD INPUT */
+
+//Player input on buy
+function updateFieldBuy(){
+	f_buy = document.getElementById('fieldBuy').value;
 }
 
 /* WEB3 TRANSACTIONS */
 
-//Begin Round
-function webBeginRound(){
-	BeginRound(function(){
+//Buy Slug
+function webBuySlug(){
+	var weitospend = web3.toWei(f_buy,'ether');
+	BuySlug(weitospend, function(){
 	});
 }
 
-//Grab snail
-function webGrabSnail(_id){
-	var weitospend = web3.toWei(a_snailCost[_id],'ether');
-	GrabSnail(_id, weitospend, function(){
+//Throw Slug
+function webThrowSlug(){
+	ThrowSlug(function(){
 	});
 }
 
-//Snag eggs
-function webSnagEgg(_id){
-	var weitospend = web3.toWei(a_snagCost,'ether');
-	SnagEgg(_id, weitospend, function(){
+//Skip Time
+function webSkipAhead(){
+	SkipAhead(function(){
 	});
 }
 
-//Claim lord
-function webClaimLord(_id){
-	var weitospend = web3.toWei(a_lordCost[_id],'ether');
-	ClaimLord(_id, weitospend, function(){
+//Trade Mile
+function webTradeMile(){
+	TradeMile(function(){
+	});
+}
+
+//Jump Out
+function webJumpOut(){
+	JumpOut(function(){
+	});
+}
+
+//Time Jump
+function webTimeJump(){
+	TimeJump(function(){
 	});
 }
 
@@ -428,8 +461,7 @@ function webPayThrone(){
 
 /* CONTRACT ABI */
 
-
-abiDefinition=[{"constant": true,"inputs": [],"name": "lastHijack","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "SLUG_COST_FLOOR","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetMile","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "round","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "TradeMile","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "MILE_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "RACE_TIMER_START","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "MAX_SPEED","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "TimeTravel","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "slugNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "THROW_SLUG_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "ThrowSlug","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "roundPot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetBalance","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "WinRace","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "SNAILTHRONE","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "TOKEN_MAX_BUY","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "mile","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "playerBalance","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "slugPot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_ether","type": "uint256"},{"name": "_isBuy","type": "bool"}],"name": "ComputeBuy","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "gameStarted","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "driver","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "ComputeDiv","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "maxSlug","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_time","type": "uint256"}],"name": "ComputeSpeed","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "timer","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "HYPERSPEED_LENGTH","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "claimedDiv","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_mile","type": "uint256"}],"name": "ComputeMileReward","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "MIN_SPEED","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "DRIVER_TIMER_BOOST","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "WithdrawBalance","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "thronePot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "StartRace","outputs": [],"payable": true,"stateMutability": "payable","type": "function"},{"constant": true,"inputs": [],"name": "DIV_SLUG_COST","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ACCEL_FACTOR","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "BuySlug","outputs": [],"payable": true,"stateMutability": "payable","type": "function"},{"constant": true,"inputs": [],"name": "divPerSlug","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeMileDriven","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeHyperReward","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_isBuy","type": "bool"}],"name": "ComputeSlugCost","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "JumpOut","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "hyperSpeed","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "starter","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"},{"payable": true,"stateMutability": "payable","type": "fallback"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "WithdrewBalance","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "slug","type": "uint256"}],"name": "BoughtSlug","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "slug","type": "uint256"}],"name": "TimeTraveled","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "mile","type": "uint256"}],"name": "TradedMile","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "BecameDriver","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "TookWheel","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "ThrewSlug","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "JumpedOut","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": true,"name": "round","type": "uint256"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "WonRace","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": true,"name": "round","type": "uint256"}],"name": "NewRound","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "round","type": "uint256"}],"name": "BeganRound","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "PaidThrone","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "BoostedPot","type": "event"}]
+abiDefinition=[{"constant": true,"inputs": [],"name": "lastHijack","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "SLUG_COST_FLOOR","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetMile","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "round","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "TradeMile","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "MILE_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "RACE_TIMER_START","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "MAX_SPEED","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "slugNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "THROW_SLUG_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "ThrowSlug","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "roundPot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetBalance","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "SNAILTHRONE","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "TOKEN_MAX_BUY","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "mile","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "playerBalance","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "slugPot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_ether","type": "uint256"},{"name": "_isBuy","type": "bool"}],"name": "ComputeBuy","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "gameStarted","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "driver","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "ComputeDiv","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "maxSlug","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_player","type": "address"}],"name": "GetNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_time","type": "uint256"}],"name": "ComputeSpeed","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "timer","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "HYPERSPEED_LENGTH","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "claimedDiv","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_reqMul","type": "uint256"}],"name": "ComputeMileReward","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "MIN_SPEED","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "DRIVER_TIMER_BOOST","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "WithdrawBalance","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [],"name": "SkipAhead","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "thronePot","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "StartRace","outputs": [],"payable": true,"stateMutability": "payable","type": "function"},{"constant": true,"inputs": [],"name": "DIV_SLUG_COST","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ACCEL_FACTOR","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "BuySlug","outputs": [],"payable": true,"stateMutability": "payable","type": "function"},{"constant": true,"inputs": [],"name": "divPerSlug","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeMileDriven","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "TimeJump","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "ComputeHyperReward","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_isBuy","type": "bool"}],"name": "ComputeSlugCost","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": false,"inputs": [],"name": "JumpOut","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [],"name": "hyperSpeed","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "starter","outputs": [{"name": "","type": "address"}],"payable": false,"stateMutability": "view","type": "function"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"},{"payable": true,"stateMutability": "payable","type": "fallback"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "WithdrewBalance","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "slug","type": "uint256"}],"name": "BoughtSlug","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "slug","type": "uint256"}],"name": "SkippedAhead","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"},{"indexed": false,"name": "mile","type": "uint256"}],"name": "TradedMile","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "BecameDriver","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "TookWheel","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"}],"name": "ThrewSlug","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "JumpedOut","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": true,"name": "round","type": "uint256"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "TimeJumped","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": true,"name": "round","type": "uint256"}],"name": "NewRound","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "round","type": "uint256"}],"name": "BeganRound","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "PaidThrone","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "address"},{"indexed": false,"name": "eth","type": "uint256"}],"name": "BoostedPot","type": "event"}]
 
 var contractAbi = web3.eth.contract(abiDefinition);
 var myContract = contractAbi.at(contractAddress);
@@ -440,11 +472,11 @@ function lastHijack(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('lastHijack ',web3.toDecimal(result));
+            //console.log('lastHijack ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -457,11 +489,11 @@ function SLUG_COST_FLOOR(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('SLUG_COST_FLOOR ',web3.toDecimal(result));
+            //console.log('SLUG_COST_FLOOR ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -474,11 +506,11 @@ function GetMile(_player,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetMile ',web3.toDecimal(result));
+            //console.log('GetMile ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -491,11 +523,11 @@ function round(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('round ',web3.toDecimal(result));
+            //console.log('round ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -508,11 +540,11 @@ function TradeMile(callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('TradeMile ',result);
+            //console.log('TradeMile ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -525,11 +557,11 @@ function MILE_REQ(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('MILE_REQ ',web3.toDecimal(result));
+            //console.log('MILE_REQ ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -542,11 +574,11 @@ function RACE_TIMER_START(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('RACE_TIMER_START ',web3.toDecimal(result));
+            //console.log('RACE_TIMER_START ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -559,28 +591,11 @@ function MAX_SPEED(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('MAX_SPEED ',web3.toDecimal(result));
+            //console.log('MAX_SPEED ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
-        }
-    });
-}
-
-
-function TimeTravel(callback){
-    
-    
-    var outputData = myContract.TimeTravel.getData();
-    var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
-    function(error,result){
-        if(!error){
-            console.log('TimeTravel ',result);
-            callback(result)
-        }
-        else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -593,11 +608,11 @@ function slugNest(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('slugNest ',web3.toDecimal(result));
+            //console.log('slugNest ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -610,11 +625,11 @@ function THROW_SLUG_REQ(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('THROW_SLUG_REQ ',web3.toDecimal(result));
+            //console.log('THROW_SLUG_REQ ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -627,11 +642,11 @@ function ThrowSlug(callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ThrowSlug ',result);
+            //console.log('ThrowSlug ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -644,11 +659,11 @@ function roundPot(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('roundPot ',web3.toDecimal(result));
+            //console.log('roundPot ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -661,28 +676,11 @@ function GetBalance(_player,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetBalance ',web3.toDecimal(result));
+            //console.log('GetBalance ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
-        }
-    });
-}
-
-
-function WinRace(callback){
-    
-    
-    var outputData = myContract.WinRace.getData();
-    var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
-    function(error,result){
-        if(!error){
-            console.log('WinRace ',result);
-            callback(result)
-        }
-        else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -695,11 +693,11 @@ function SNAILTHRONE(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('SNAILTHRONE ',result);
+            //console.log('SNAILTHRONE ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -712,11 +710,11 @@ function TOKEN_MAX_BUY(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('TOKEN_MAX_BUY ',web3.toDecimal(result));
+            //console.log('TOKEN_MAX_BUY ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -729,11 +727,11 @@ function mile(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('mile ',web3.toDecimal(result));
+            //console.log('mile ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -746,11 +744,11 @@ function playerBalance(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('playerBalance ',web3.toDecimal(result));
+            //console.log('playerBalance ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -763,11 +761,11 @@ function slugPot(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('slugPot ',web3.toDecimal(result));
+            //console.log('slugPot ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -780,11 +778,11 @@ function ComputeBuy(_ether,_isBuy,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeBuy ',web3.toDecimal(result));
+            //console.log('ComputeBuy ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -797,11 +795,11 @@ function gameStarted(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('gameStarted ',result);
+            //console.log('gameStarted ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -814,11 +812,11 @@ function driver(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('driver ',result);
+            //console.log('driver ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -831,11 +829,11 @@ function ComputeDiv(_player,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeDiv ',web3.toDecimal(result));
+            //console.log('ComputeDiv ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -848,11 +846,11 @@ function maxSlug(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('maxSlug ',web3.toDecimal(result));
+            //console.log('maxSlug ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -865,11 +863,11 @@ function GetNest(_player,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetNest ',web3.toDecimal(result));
+            //console.log('GetNest ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -882,11 +880,11 @@ function ComputeSpeed(_time,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeSpeed ',web3.toDecimal(result));
+            //console.log('ComputeSpeed ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -899,11 +897,11 @@ function timer(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('timer ',web3.toDecimal(result));
+            //console.log('timer ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -916,11 +914,11 @@ function HYPERSPEED_LENGTH(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('HYPERSPEED_LENGTH ',web3.toDecimal(result));
+            //console.log('HYPERSPEED_LENGTH ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -933,28 +931,28 @@ function claimedDiv(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('claimedDiv ',web3.toDecimal(result));
+            //console.log('claimedDiv ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
 
 
-function ComputeMileReward(_mile,callback){
+function ComputeMileReward(_reqMul,callback){
     
     
-    var outputData = myContract.ComputeMileReward.getData(_mile);
+    var outputData = myContract.ComputeMileReward.getData(_reqMul);
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeMileReward ',web3.toDecimal(result));
+            //console.log('ComputeMileReward ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -967,11 +965,11 @@ function MIN_SPEED(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('MIN_SPEED ',web3.toDecimal(result));
+            //console.log('MIN_SPEED ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -984,11 +982,11 @@ function DRIVER_TIMER_BOOST(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('DRIVER_TIMER_BOOST ',web3.toDecimal(result));
+            //console.log('DRIVER_TIMER_BOOST ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1001,11 +999,28 @@ function WithdrawBalance(callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('WithdrawBalance ',result);
+            //console.log('WithdrawBalance ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
+        }
+    });
+}
+
+
+function SkipAhead(callback){
+    
+    
+    var outputData = myContract.SkipAhead.getData();
+    var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
+    function(error,result){
+        if(!error){
+            //console.log('SkipAhead ',result);
+            callback(result)
+        }
+        else{
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1018,11 +1033,11 @@ function thronePot(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('thronePot ',web3.toDecimal(result));
+            //console.log('thronePot ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1035,11 +1050,11 @@ function StartRace(eth,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData,value: eth},
     function(error,result){
         if(!error){
-            console.log('StartRace ',result);
+            //console.log('StartRace ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1052,11 +1067,11 @@ function DIV_SLUG_COST(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('DIV_SLUG_COST ',web3.toDecimal(result));
+            //console.log('DIV_SLUG_COST ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1069,11 +1084,11 @@ function ACCEL_FACTOR(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ACCEL_FACTOR ',web3.toDecimal(result));
+            //console.log('ACCEL_FACTOR ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1086,11 +1101,11 @@ function BuySlug(eth,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData,value: eth},
     function(error,result){
         if(!error){
-            console.log('BuySlug ',result);
+            //console.log('BuySlug ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1103,11 +1118,11 @@ function divPerSlug(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('divPerSlug ',web3.toDecimal(result));
+            //console.log('divPerSlug ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1120,11 +1135,28 @@ function ComputeMileDriven(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeMileDriven ',web3.toDecimal(result));
+            //console.log('ComputeMileDriven ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
+        }
+    });
+}
+
+
+function TimeJump(callback){
+    
+    
+    var outputData = myContract.TimeJump.getData();
+    var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
+    function(error,result){
+        if(!error){
+            //console.log('TimeJump ',result);
+            callback(result)
+        }
+        else{
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1137,11 +1169,11 @@ function ComputeHyperReward(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeHyperReward ',web3.toDecimal(result));
+            //console.log('ComputeHyperReward ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1154,11 +1186,11 @@ function ComputeSlugCost(_isBuy,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeSlugCost ',web3.toDecimal(result));
+            //console.log('ComputeSlugCost ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1171,11 +1203,11 @@ function JumpOut(callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('JumpOut ',result);
+            //console.log('JumpOut ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1188,11 +1220,11 @@ function hyperSpeed(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('hyperSpeed ',result);
+            //console.log('hyperSpeed ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1205,11 +1237,11 @@ function starter(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('starter ',result);
+            //console.log('starter ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -1291,7 +1323,7 @@ function runLog(){
 		ranLog = true;
 		myContract.allEvents({ fromBlock: twoDaysBlock, toBlock: 'latest' }).get(function(error, result){
 			if(!error){
-				//console.log(result);
+				//////console.log(result);
 				var i = 0;				
 				for(i = 0; i < result.length; i++){
 					if(checkHash(storetxhash, result[i].transactionHash) != 0) {
@@ -1328,7 +1360,7 @@ function runLog(){
 				}
 			}
 			else{
-				//console.log("problem!");
+				//////console.log("problem!");
 			}
 		});
 	}
@@ -1338,7 +1370,7 @@ var startedroundEvent = myContract.StartedRound();
 
 startedroundEvent.watch(function(error, result){
     if(!error){
-		//console.log(result);
+		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] Round " + result.args.round + " starts!";
@@ -1351,7 +1383,7 @@ var grabbedsnailEvent = myContract.GrabbedSnail();
 
 grabbedsnailEvent.watch(function(error, result){
     if(!error){
-		//console.log(result);
+		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " grabs " + idSnailToName(web3.toDecimal(result.args.snail)) + " for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH, and gets " + result.args.egg + " eggs.";
@@ -1367,7 +1399,7 @@ var snaggedeggEvent = myContract.SnaggedEgg();
 
 snaggedeggEvent.watch(function(error, result){
     if(!error){
-		//console.log(result);
+		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " snags " + result.args.egg + " eggs from his snail " + idSnailToName(web3.toDecimal(result.args.snail)) + ".";
@@ -1383,7 +1415,7 @@ var claimedlordEvent = myContract.ClaimedLord();
 
 claimedlordEvent.watch(function(error, result){
 	if(!error){
-		////////////console.log(result);
+		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " claims the lord " + idLordToName(web3.toDecimal(result.args.lord)) + "! For their " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH, they get " + result.args.egg + " eggs.";
@@ -1399,7 +1431,7 @@ var wonroundEvent = myContract.WonRound();
 
 wonroundEvent.watch(function(error, result){
     if(!error){
-		////////////console.log(result);
+		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " WON ROUND " + result.args.round + "! Their reward: " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH.";
@@ -1414,7 +1446,7 @@ var withdrewbalanceEvent = myContract.WithdrewBalance();
 
 withdrewbalanceEvent.watch(function(error, result){
     if(!error){
-		////////////console.log(result);
+		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " withdrew " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH to their wallet.";
@@ -1427,7 +1459,7 @@ var paidthroneEvent = myContract.PaidThrone();
 
 paidthroneEvent.watch(function(error, result){
     if(!error){
-		////////////console.log(result);
+		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " paid tribute to the SnailThrone! " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH has been sent.";
@@ -1440,7 +1472,7 @@ var boostedpotEvent = myContract.BoostedPot();
 
 boostedpotEvent.watch(function(error, result){
     if(!error){
-		////////////console.log(result);
+		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH donation to the JackPot.";
@@ -1452,5 +1484,5 @@ boostedpotEvent.watch(function(error, result){
 /*
 const filter = { fromBlock: launchBlock, toBlock: 'latest'}; // filter for your address
 const events = myContract.allEvents(filter); // get all events
-//console.log(events);
+//////console.log(events);
 */
