@@ -345,7 +345,7 @@ function updateThronePot(){
 
 //Current speed
 function updateSpeed(){
-	ComputeSpeed(function(result) {
+	ComputeSpeed(a_timer, function(result) {
 		a_speed = result;
 	});
 }
