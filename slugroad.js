@@ -178,7 +178,9 @@ function mainUpdate(){
 	updateDriver();
 	updateDriverMileOld();
 	updateDriverMileNew();
-	updateEtherDrained();
+	if(s_hyperState > 0){
+		updateEtherDrained();
+	}
 	updateBuySlugCost();
 	updateGetSlugCost();
 	updatePlayerSlug();
@@ -367,7 +369,7 @@ function updateDriverMileOld(){
 }
 
 function updateDriverMileNew(){
-	ComputeMileDriven(a_driver, function(result) {
+	ComputeMileDriven(function(result) {
 		a_driverMileNew = result;
 	});
 }
@@ -402,9 +404,13 @@ function updatePlayerSlug(){
 
 //Current player mile
 function updatePlayerMile(){
-	GetMile(m_account, function(result) {
-		a_playerMile = result;
-	});
+	if(m_account != a_driver){
+		GetMile(m_account, function(result) {
+			a_playerMile = result;
+		});
+	} else {
+		a_playerMile = parseInt(a_driverMileOld + a_driverMileNew);
+	}
 }
 
 //Current max slug
