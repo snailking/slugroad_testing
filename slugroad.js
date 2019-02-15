@@ -81,6 +81,7 @@ var a_buyCost;
 var a_getCost;
 var a_playerSlug;
 var a_playerBalance;
+var a_playerDiv;
 var a_playerMile;
 var a_trade6000;
 var a_mileReward;
@@ -107,7 +108,7 @@ var doc_thronePot = document.getElementById('thronepot');
 var doc_buy200 = document.getElementById('buy200');
 var doc_fieldBuySlug = document.getElementById('fieldBuySlug');
 var doc_playerSlug = document.getElementById('playerslug');
-var doc_playerBalance = document.getElementById('playerbalance');
+var doc_playerReward = document.getElementById('playerreward');
 var doc_playerMile = document.getElementById('playermile');
 var doc_time200 = document.getElementById('time200');
 var doc_timeGetSlug = document.getElementById('timeGetSlug');
@@ -172,6 +173,7 @@ function mainUpdate(){
 	updateSlugPot();
 	updateRoundPot();
 	updateThronePot();
+	updateSpeed();
 	updateDriver();
 	updateDriverMile();
 	updateEtherDrained();
@@ -180,6 +182,8 @@ function mainUpdate(){
 	updatePlayerSlug();
 	updatePlayerMile();
 	updatePlayerBalance();
+	updatePlayerDiv();
+	updatePlayerReward();
 	updateTrade6000Reward();
 	updateMileReward();
 	updateTimer();
@@ -208,7 +212,7 @@ function updateText(){
 	doc_thronePot.innerHTML = a_thronePot;	
 	doc_buy200.innerHTML = a_buyCost * 200;
 	doc_playerSlug.innerHTML = a_playerSlug;
-	doc_playerBalance.innerHTML = a_playerBalance;
+	doc_playerReward.innerHTML = a_playerBalance + a_playerDiv;
 	doc_playerMile.innerHTML = a_playerMile;
 	doc_time200.innerHTML = a_getCost * 200;
 	doc_trade6000Mile.innerHTML = a_trade6000;
@@ -339,6 +343,13 @@ function updateThronePot(){
 	});
 }
 
+//Current speed
+function updateSpeed(){
+	ComputeSpeed(function(result) {
+		a_speed = result;
+	});
+}
+
 //Current driver
 function updateDriver(){
 	driver(function(result) {
@@ -364,6 +375,13 @@ function updateEtherDrained(){
 function updatePlayerBalance(){
 	GetBalance(m_account, function(result) {
 		a_playerBalance = formatEthValue(web3.fromWei(result,'ether'));		
+	});
+}
+
+//Current player divs
+function updatePlayerDiv(){
+	ComputeDiv(m_account, function(result) {
+		a_playerDiv = formatEthValue(web3.fromWei(result,'ether'));		
 	});
 }
 
@@ -398,14 +416,14 @@ function updateBuySlugCost(){
 //Current cost for getting slugs through time
 function updateGetSlugCost(){
 	ComputeSlugCost(false, function(result) {
-		a_buyCost =	formatEthValue2(web3.fromWei(result,'ether'));
+		a_getCost =	formatEthValue2(web3.fromWei(result,'ether'));
 	});
 }
 
 //Current reward for trading 6000 miles
 function updateTrade6000Reward(){
 	ComputeMileReward(1, function(result) {
-		a_mileReward = formatEthValue2(web3.fromWei(result,'ether'));
+		a_trade6000 = formatEthValue2(web3.fromWei(result,'ether'));
 	});
 }
 
