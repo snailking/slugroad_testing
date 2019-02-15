@@ -85,6 +85,9 @@ var a_playerMile;
 var a_trade6000;
 var a_mileReward;
 
+var u_updateEvent = false;
+var p_keepUpdating = false;
+
 var s_hyperState = 0; //0: no hyperspeed, 1: hyperspeed, 2: round over
 
 var f_buy;
