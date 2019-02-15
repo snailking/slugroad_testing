@@ -189,6 +189,7 @@ function mainUpdate(){
 	updatePlayerDiv();
 	updateTrade6000Reward();
 	updateMileReward();
+	updateMaxSlug();
 	updateTimer();
 	updateLog();
 	updateText();
