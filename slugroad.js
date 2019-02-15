@@ -438,6 +438,7 @@ function updateMileReward(){
 //Player input on buy
 function updateFieldBuy(){
 	f_buy = document.getElementById('fieldBuy').value;
+	doc_fieldBuySlug.innerHTML = parseInt(f_buy / a_buyCost);
 }
 
 /* WEB3 TRANSACTIONS */
