@@ -73,7 +73,8 @@ var a_roundPot;
 var a_slugPot;
 var a_thronePot;
 var a_driver = "";
-var a_driverMile = 0;
+var a_driverMileOld = 0;
+var a_driverMileNew = 0;
 var a_etherDrained = 0;
 var a_lastHijack;
 var a_maxSlug;
@@ -175,7 +176,8 @@ function mainUpdate(){
 	updateThronePot();
 	updateSpeed();
 	updateDriver();
-	updateDriverMile();
+	updateDriverMileOld();
+	updateDriverMileNew();
 	updateEtherDrained();
 	updateBuySlugCost();
 	updateGetSlugCost();
@@ -226,20 +228,20 @@ function updateText(){
 	
 	if(s_hyperState == 0){
 		if(a_driver == m_account){
-			doc_driverState.innerHTML = ' hold the wheel!<br> Distance driven: ' + a_driverMile + ' miles';
-			doc_actionState.innerHTML = 'KEEP GOING!';
+			doc_driverState.innerHTML = ' hold the wheel!<br> Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
+			doc_actionState.innerHTML = '<h4>KEEP GOING!</h4>';
 		} else {
-			doc_driverState.innerHTML = ' holds the wheel!<br> Distance driven: ' + a_driverMile + ' miles';
+			doc_driverState.innerHTML = ' holds the wheel!<br> Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
 		doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
 		if(a_driver == m_account){
-			doc_driverState.innerHTML = ' drain the pot!<br> Ether drained: ' + a_etherDrained + ' ETH';
+			doc_driverState.innerHTML = ' drain the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">JUMP OUT</button>';
 		} else {
-			doc_driverState.innerHTML = ' drains the pot!<br> Ether drained: ' + a_etherDrained + ' ETH';
+			doc_driverState.innerHTML = ' drains the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
@@ -344,7 +346,8 @@ function updateThronePot(){
 
 //Current speed
 function updateSpeed(){
-	ComputeSpeed(a_timer, function(result) {
+	var _blocktime = Math.round((new Date()).getTime() / 1000); //current blocktime should be Unix timestamp
+	ComputeSpeed(_blocktime, function(result) {
 		a_speed = result;
 	});
 }
@@ -357,9 +360,15 @@ function updateDriver(){
 }
 
 //Current driver miles
-function updateDriverMile(){
+function updateDriverMileOld(){
 	GetMile(a_driver, function(result) {
-		a_driverMile = result;
+		a_driverMileOld = result;
+	});
+}
+
+function updateDriverMileNew(){
+	ComputeMileDriven(a_driver, function(result) {
+		a_driverMileNew = result;
 	});
 }
 
