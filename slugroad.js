@@ -234,17 +234,17 @@ function updateText(){
 			doc_actionState.innerHTML = '<h4>KEEP GOING!</h4>';
 		} else {
 			doc_driverState.innerHTML = ' holds the wheel!<br> Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button>';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
 		doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
 		if(a_driver == m_account){
 			doc_driverState.innerHTML = ' drain the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">JUMP OUT</button>';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webJumpOut()">JUMP OUT</button>';
 		} else {
 			doc_driverState.innerHTML = ' drains the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button>';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
 		doc_speed.innerHTML = a_speed;
@@ -252,7 +252,7 @@ function updateText(){
 		doc_driverState.innerHTML = ' WON THE POT!<br> Press "Time Jump" to start a new race';
 		doc_hyperState.innerHTML = 'TIME JUMP READY!';
 		doc_speed.innerHTML = 'Infinity';
-		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="">TIME JUMP</button>';
+		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webTimeJump()">TIME JUMP</button>';
 	}
 }
 
@@ -453,6 +453,9 @@ function updateMileReward(){
 //Player input on buy
 function updateFieldBuy(){
 	f_buy = document.getElementById('fieldBuy').value;
+	if(f_buy > 1){
+		f_buy = 1;
+	}
 	doc_fieldBuySlug.innerHTML = parseInt(f_buy / a_buyCost);
 }
 

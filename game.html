@@ -61,21 +61,21 @@
 				<div class="col-sm img-border2 info">
 					<h2>BUY SLUGS</h2><br>
 					<h5>200 slugs for <span id="buy200">0.211</span> ETH</h5>
-					<h5><input type="text" id="fieldBuy" value="0.1" size="4"> ETH</h5>
+					<h5><input type="text" id="fieldBuy" value="0.1" size="3"> ETH</h5>
 					<h5>You will get <span id="fieldBuySlug">200</span> slugs</h5><br>
-					<button class="btn btn-lg btn-info">BUY SLUGS</button>
+					<button class="btn btn-lg btn-info" onclick="webBuySlug()">BUY SLUGS</button>
 				</div>
 				<div class="col-sm img-border2 info2">
 					<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button></span><br>
 					<h2>You own <span id="playerslug">10400</span> Slugs</h3><br><br>
 					<h2>You won <span id="playerreward">0.345</span> ETH</h3>
-					<button class="btn btn-lg btn-info">WITHDRAW</button>
+					<button class="btn btn-lg btn-info" onclick="webWithdrawBalance()">WITHDRAW</button>
 				</div>
 				<div class="col-sm img-border2 info">
-					<h2>SKIP TIME</h2><br>
+					<h2>SKIP AHEAD</h2><br>
 					<h5>200 slugs for <span id="time200">0.154</span> ETH</h5>
 					<h5>You will get <span id="timeGetSlug">544</span> slugs</h5><br><br>
-					<button class="btn btn-lg btn-info">SKIP TIME</button>
+					<button class="btn btn-lg btn-info" onclick="webSkipAhead()">SKIP AHEAD</button>
 				</div>
 			</div>
 		</div><br>
@@ -94,7 +94,7 @@
 							<h5>Your next reward: <span id="milereward">0.090</span> ETH</h5>
 						</div>
 					</div>
-					<button class="btn btn-lg btn-info">TRADE MILES</button>
+					<button class="btn btn-lg btn-info" onclick="webTradeMile()">TRADE MILES</button>
 				</div>
 			</div>
 		</div><br>
@@ -105,7 +105,7 @@
 					<h3>EVENTS</h3>
 				</div>
 				<div class="col-sm" align="right">
-					<button class="btn btn-info">Get Past Events</button>
+					<button class="btn btn-info" onclick="runLog()">Get Past Events</button>
 				</div>
 			</div>
 			<div class="scroll-box" id="logboxscroll">
