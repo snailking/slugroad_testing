@@ -52,12 +52,13 @@ window.onclick = function(event) {
 var timeLaunch = 1548516649;
 var launchBlock = 7129676;
 
-var twoDaysBlock = 0;
+var startBlock = 0;
 var ranLog = false;
 
 function checkBlock(){
 	web3.eth.getBlockNumber(function (error, result){
-		twoDaysBlock = result - 12000;
+		console.log("block number is " + result);
+		startBlock = result - 10000; //~half a day
 	});
 }
 
@@ -306,12 +307,16 @@ function updateLocalTimer(){
 		
 	if(_timer < 0){ //if under 0, the round is over
 		s_hyperState = 2;
-		doc_timer.innerHTML = 'The race is over!';
+		doc_timer.innerHTML = 'TIMEJUMP READY!';
 	} else if(_timer <= 3600){ //if under 1 hour, we're in hyperspeed
 		s_hyperState = 1;
 	} else {
 		s_hyperState = 0;
 		_timer = _timer - 3600; //remove 1 hour, as we show the time before hyperspeed
+	}
+	
+	if(_timer < 0 && _timer > -60){ //for a minute after we hit 0, wait for blockchain confirmation
+		doc_timer.innerHTML = 'On the edge of timejump...';
 	}
 		
 	if(s_hyperState < 2){
