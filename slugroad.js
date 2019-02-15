@@ -183,7 +183,6 @@ function mainUpdate(){
 	updatePlayerMile();
 	updatePlayerBalance();
 	updatePlayerDiv();
-	updatePlayerReward();
 	updateTrade6000Reward();
 	updateMileReward();
 	updateTimer();
