@@ -325,9 +325,9 @@ function updateLocalTimer(){
 		if(_seconds < 10) { _seconds = "0" + _seconds }
 		var _milliseconds = parseInt(((_timer % 3600000) % 60000) % 1000);
 		if(_milliseconds < 100) { _milliseconds = "0" + _milliseconds }
-		if(_milliseconds < 10) { _milliseconds = "00" + _milliseconds }
+		if(_milliseconds < 10) { _milliseconds = "0" + _milliseconds }
 		
-		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "." + _milliseconds;
+		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "<h3>." + _milliseconds;
 	}
 }
 
