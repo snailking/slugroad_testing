@@ -319,11 +319,11 @@ function updateLocalTimer(){
 	if(s_hyperState < 2){
 		var _hours = Math.floor(_timer / 3600000);
 		if(_hours < 10) { _hours = "0" + _hours }
-		var _minutes = Math.floor((_timer % 3600000) / 60);
+		var _minutes = Math.floor((_timer % 3600000) / 60000);
 		if(_minutes < 10) { _minutes = "0" + _minutes }
-		var _seconds = Math.floor(((_timer % 3600000) % 60) / 60);
+		var _seconds = Math.floor(((_timer % 3600000) % 60000) / 1000);
 		if(_seconds < 10) { _seconds = "0" + _seconds }
-		var _milliseconds = parseInt(((_timer % 3600000) % 60) % 60);
+		var _milliseconds = parseInt(((_timer % 3600000) % 60000) % 1000);
 		if(_milliseconds < 100) { _milliseconds = "0" + _milliseconds }
 		if(_milliseconds < 10) { _milliseconds = "00" + _milliseconds }
 		
