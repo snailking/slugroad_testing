@@ -88,6 +88,11 @@ var a_playerMile;
 var a_trade6000;
 var a_mileReward;
 
+var l_speed = 0;
+var MAX_SPEED = 1000000;
+var MIN_SPEED = 100000;
+var ACCEL_FACTOR = 672;
+
 var u_updateEvent = false;
 var p_keepUpdating = false;
 
@@ -331,13 +336,10 @@ function updateLocalTimer(){
 	}
 	
 	if(s_hyperState == 0){
-		var MAX_SPEED = 1000000;
-		var MIN_SPEED = 100000;
-		var ACCEL_FACTOR = 672;
-		var _speed = MAX_SPEED - (_timer / ACCEL_FACTOR);
-		if(_speed < MIN_SPEED) { _speed = MIN_SPEED };
-		var _miles = Math.floor(_speed / 1000);
-		var _decimiles = Math.floor(_speed % 1000);
+		l_speed = MAX_SPEED - (_timer / ACCEL_FACTOR);
+		if(l_speed < MIN_SPEED) { l_speed = MIN_SPEED };
+		var _miles = Math.floor(l_speed / 1000) + 1;
+		var _decimiles = Math.floor(l_speed % 1000);
 		if(_decimiles < 100) { _decimiles = "0" + _decimiles }
 		if(_decimiles < 10) { _decimiles = "0" + _decimiles }
 		

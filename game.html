@@ -47,14 +47,74 @@
 				</div>
 			</div>
 			<h3><span id="driver">0x1234abcd</span> <span id="driverstate">holds the wheel!<br> Distance driven: 145668 miles</span></h4>			
-		</div>
+		</div><br>
+		<!-- PLAYER STATS -->
 		<div class="container" align="center">
-			<div class="img-border2">
-				<div class="info2 img-border2">
-				<h1>GET OR THROW 200 SLUGS TO BECOME THE DRIVER</h1>
+			<div class="img-border2 info2">
+				<div class="row">
+					<div class="col-sm img-border2 info">
+						<img src="img/slug.png" height="32px"> <h5 style="display: inline-block;"><span id="playerslug">11111</span></h5>
+					</div>
+					<div class="col-sm img-border2 info">
+						<img src="img/ether.png" height="32px"> <h5 style="display: inline-block;"><span id="playerreward">23.45</span></h5>
+					</div>
+					<div class="col-sm img-border2 info">
+						<img src="img/road.png" height="32px"> <h5 style="display: inline-block;"><span id="playermile">3444</span></h5>
+					</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		</div><br>
+		<!-- ACTIONS -->
+		<div class="container" align="center">
+			<div class="">
+				<div class="row">
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="webBuySlug()">BUY SLUGS</button>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="webSkipAhead()">SKIP AHEAD</button>
+					</div>
+					<div class="col-sm">
+						<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="">THROW SLUGS</button></span>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="webTradeMile()">TRADE MILES</button>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="webWithdrawBalance()">WITHDRAW</button>
+					</div>
+				</div>
+			</div>
+		</div><br>
+		
+		<!-- LOG -->
+		<div class="container img-border info">
+			<div class="row">
+				<div class="col-sm">
+					<h3>EVENTS</h3>
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-info" onclick="runLog()">Get Past Events</button>
+				</div>
+			</div>
+			<div class="scroll-box" id="logboxscroll">
+				<p><span id="eventlog">[Waiting for events...]</span></p>
+			</div>
+		</div><br>
+		<!-- STATS -->
+		<div class="container img-border info2">
+			<h3>STATS</h3><br>
+			<h5><span id="maxslug">345340</span> slugs alive</h5>
+			<h5><span id="contractbalance">46.66</span> ETH in contract</h5>
+			<h5><span id="slugpot">20.00</span> ETH in SlugPot</h5>
+			<h5><span id="thronepot">10.00</span> ETH in ThronePot</h5>
+			<h5>30495 miles driven</h5>
+			<h5>4568 slugs thrown</h5>
+			<h5>34 drivers</h5>
+			<h5>20 ETH won</h5>
+			<h5>This trip started 7 days 48 minutes ago</h5>
+		</div><br>
 		<!-- GET / OWN / HATCH -->
 		<div class="container" align="center">
 			<div class="row">
@@ -97,33 +157,6 @@
 					<button class="btn btn-lg btn-info" onclick="webTradeMile()">TRADE MILES</button>
 				</div>
 			</div>
-		</div><br>
-		<!-- LOG -->
-		<div class="container img-border info">
-			<div class="row">
-				<div class="col-sm">
-					<h3>EVENTS</h3>
-				</div>
-				<div class="col-sm" align="right">
-					<button class="btn btn-info" onclick="runLog()">Get Past Events</button>
-				</div>
-			</div>
-			<div class="scroll-box" id="logboxscroll">
-				<p><span id="eventlog">[Waiting for events...]</span></p>
-			</div>
-		</div><br>
-		<!-- STATS -->
-		<div class="container img-border info2">
-			<h3>STATS</h3><br>
-			<h5><span id="maxslug">345340</span> slugs alive</h5>
-			<h5><span id="contractbalance">46.66</span> ETH in contract</h5>
-			<h5><span id="slugpot">20.00</span> ETH in SlugPot</h5>
-			<h5><span id="thronepot">10.00</span> ETH in ThronePot</h5>
-			<h5>30495 miles driven</h5>
-			<h5>4568 slugs thrown</h5>
-			<h5>34 drivers</h5>
-			<h5>20 ETH won</h5>
-			<h5>This trip started 7 days 48 minutes ago</h5>
 		</div><br>
 		<!-- JAVASCRIPT -->
 		<script src="slugroad.js"></script>				
