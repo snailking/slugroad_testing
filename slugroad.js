@@ -199,12 +199,8 @@ function mainUpdate(){
 
 function fastUpdate(){
 	updateLocalTimer();
-	setTimeout(fastUpdate, 1000);
-}
-
-function veryFastUpdate(){
 	updateFieldBuy();
-	setTimeout(veryFastUpdate, 200);
+	setTimeout(fastUpdate, 123);
 }
 
 //Updates all text from web3 calls
@@ -215,14 +211,15 @@ function updateText(){
 	doc_roundPot.innerHTML = a_roundPot;
 	doc_slugPot.innerHTML = a_slugPot;
 	doc_thronePot.innerHTML = a_thronePot;	
-	doc_buy200.innerHTML = a_buyCost * 200;
+	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(4);
 	doc_playerSlug.innerHTML = a_playerSlug;
 	doc_playerReward.innerHTML = a_playerBalance + a_playerDiv;
 	doc_playerMile.innerHTML = a_playerMile;
-	doc_time200.innerHTML = a_getCost * 200;
+	doc_time200.innerHTML = parseFloat(a_getCost * 200).toFixed(4);
 	doc_trade6000Mile.innerHTML = a_trade6000;
 	doc_mileReward.innerHTML = a_mileReward;
 	doc_maxSlug.innerHTML = a_maxSlug;
+	doc_timeGetSlug.innerHTML = parseInt((a_playerDiv + a_playerBalance) / (a_getCost));
 	
 	if(a_driver == m_account){
 		doc_driver.innerHTML = 'YOU';
@@ -302,34 +299,40 @@ function updateTimer(){
 
 //Local timer update
 function updateLocalTimer(){
-	var _blocktime = Math.round((new Date()).getTime() / 1000); //current blocktime should be Unix timestamp
-	var _timer = a_timer - _blocktime;
+	var _blocktime = (new Date()).getTime(); //current "blocktime" in milliseconds
+	var _timer = a_timer * 1000 - _blocktime;
 		
 	if(_timer < 0){ //if under 0, the round is over
 		s_hyperState = 2;
 		doc_timer.innerHTML = 'TIMEJUMP READY!';
-	} else if(_timer <= 3600){ //if under 1 hour, we're in hyperspeed
+	} else if(_timer <= 3600000){ //if under 1 hour, we're in hyperspeed
 		s_hyperState = 1;
 	} else {
 		s_hyperState = 0;
-		_timer = _timer - 3600; //remove 1 hour, as we show the time before hyperspeed
+		_timer = _timer - 3600000; //remove 1 hour, as we show the time before hyperspeed
 	}
 	
-	if(_timer < 0 && _timer > -60){ //for a minute after we hit 0, wait for blockchain confirmation
+	if(_timer < 0 && _timer > -60000){ //for a minute after we hit 0, wait for blockchain confirmation
 		doc_timer.innerHTML = 'On the edge of timejump...';
 	}
 		
 	if(s_hyperState < 2){
-		var _hours = Math.floor(_timer / 3600);
+		var _hours = Math.floor(_timer / 3600000);
 		if(_hours < 10) { _hours = "0" + _hours }
-		var _minutes = Math.floor((_timer % 3600) / 60);
+		var _minutes = Math.floor((_timer % 3600000) / 60);
 		if(_minutes < 10) { _minutes = "0" + _minutes }
-		var _seconds = parseFloat((_timer % 3600) % 60).toFixed(0);
+		var _seconds = Math.floor(((_timer % 3600000) % 60) / 60);
 		if(_seconds < 10) { _seconds = "0" + _seconds }
-			
-		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds;
+		var _milliseconds = parseInt(((_timer % 3600000) % 60) % 60);
+		if(_milliseconds < 100) { _milliseconds = "0" + _milliseconds }
+		if(_milliseconds < 10) { _milliseconds = "00" + _milliseconds }
+		
+		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "." + _milliseconds;
 	}
 }
+
+//Local speed update
+function updateLocalSpeed(){}
 
 //Current slug pot
 function updateSlugPot(){
