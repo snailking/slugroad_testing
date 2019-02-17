@@ -334,7 +334,7 @@ function updateLocalTimer(){
 		var MAX_SPEED = 1000000;
 		var MIN_SPEED = 100000;
 		var ACCEL_FACTOR = 672;
-		var _speed = MAX_SPEED - (_timer / ACCEL_FACTOR));
+		var _speed = MAX_SPEED - (_timer / ACCEL_FACTOR);
 		if(_speed < MIN_SPEED) { _speed = MIN_SPEED };
 		var _miles = Math.floor(_speed / 1000);
 		var _decimiles = Math.floor(_speed % 1000);
