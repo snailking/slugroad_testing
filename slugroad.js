@@ -165,7 +165,7 @@ function dateLog(_blockNumber) {
 function initUpdate(){
 	mainUpdate();
 	fastUpdate();
-	veryFastUpdate();
+	//veryFastUpdate();
 }	
 
 function mainUpdate(){
@@ -236,7 +236,7 @@ function updateText(){
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
-		doc_speed.innerHTML = a_speed;	
+		//doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
 		if(a_driver == m_account){
 			doc_driverState.innerHTML = ' drain the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
@@ -246,7 +246,7 @@ function updateText(){
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
 		}
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
-		doc_speed.innerHTML = a_speed;
+		doc_speed.innerHTML = "1000.000";
 	} else if (s_hyperState == 2) {
 		doc_driverState.innerHTML = ' WON THE POT!<br> Press "Time Jump" to start a new race';
 		doc_hyperState.innerHTML = 'TIME JUMP READY!';
@@ -327,12 +327,44 @@ function updateLocalTimer(){
 		if(_milliseconds < 100) { _milliseconds = "0" + _milliseconds }
 		if(_milliseconds < 10) { _milliseconds = "0" + _milliseconds }
 		
-		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "<h3>." + _milliseconds;
+		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "." + _milliseconds;
 	}
+	
+	if(s_hyperState == 0){
+		var MAX_SPEED = 1000000;
+		var MIN_SPEED = 100000;
+		var ACCEL_FACTOR = 672;
+		var _speed = MAX_SPEED - (_timer / ACCEL_FACTOR));
+		if(_speed < MIN_SPEED) { _speed = MIN_SPEED };
+		var _miles = Math.floor(_speed / 1000);
+		var _decimiles = Math.floor(_speed % 1000);
+		if(_decimiles < 100) { _decimiles = "0" + _decimiles }
+		if(_decimiles < 10) { _decimiles = "0" + _decimiles }
+		
+		doc_speed.innerHTML = _miles + "." + _decimiles;
+	}	
 }
 
-//Local speed update
-function updateLocalSpeed(){}
+
+// ComputeSpeed
+    // Returns current speed
+    // speed = maxspeed - ((timer - _time - 1 hour) / accelFactor)
+    
+    function ComputeSpeed(uint256 _time) public view returns(uint256) {
+        
+        //check we're not in hyperspeed
+        if(timer > _time.add(HYPERSPEED_LENGTH)){
+            
+            //check we're not more than 7 days away from end
+            if(timer.sub(_time) < RACE_TIMER_START){
+                return MAX_SPEED.sub((timer.sub(_time).sub(HYPERSPEED_LENGTH)).div(ACCEL_FACTOR));
+            } else {
+                return MIN_SPEED; //more than 7 days away
+            }
+        } else {
+            return MAX_SPEED; //hyperspeed
+        }
+    }
 
 //Current slug pot
 function updateSlugPot(){
