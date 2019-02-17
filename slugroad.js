@@ -345,27 +345,6 @@ function updateLocalTimer(){
 	}	
 }
 
-
-// ComputeSpeed
-    // Returns current speed
-    // speed = maxspeed - ((timer - _time - 1 hour) / accelFactor)
-    
-    function ComputeSpeed(uint256 _time) public view returns(uint256) {
-        
-        //check we're not in hyperspeed
-        if(timer > _time.add(HYPERSPEED_LENGTH)){
-            
-            //check we're not more than 7 days away from end
-            if(timer.sub(_time) < RACE_TIMER_START){
-                return MAX_SPEED.sub((timer.sub(_time).sub(HYPERSPEED_LENGTH)).div(ACCEL_FACTOR));
-            } else {
-                return MIN_SPEED; //more than 7 days away
-            }
-        } else {
-            return MAX_SPEED; //hyperspeed
-        }
-    }
-
 //Current slug pot
 function updateSlugPot(){
 	slugPot(function(result) {
