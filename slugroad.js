@@ -137,7 +137,7 @@ var s_hyperState = 0; //0: no hyperspeed, 1: hyperspeed, 2: round over
 var f_buy;
 
 var m_account = "waiting for web3";
-var no_driver = "0xABF3E252006D805Cce3C7219A929B83465F2a46e";
+var no_driver = "0xabf3e252006d805cce3c7219a929b83465f2a46e";
 
 var doc_contractBalance = document.getElementById('contractbalance');
 var doc_round = document.getElementById('round');
