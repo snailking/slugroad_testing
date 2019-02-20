@@ -27,24 +27,59 @@ window.addEventListener('load', async () => {
         ////console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
 });
+
 /* MODAL */
 
-// Get the modals
-var snag_modal = document.getElementById("snagmodal");
-var start_modal = document.getElementById("startmodal");
+// Get modals
+var car_1_modal = document.getElementById("car_1_modal");
+var car_2_modal = document.getElementById("car_2_modal");
+var car_3_modal = document.getElementById("car_3_modal");
+var car_4_modal = document.getElementById("car_4_modal");
+var help_1_modal = document.getElementById("help_1_modal");
+var help_2_modal = document.getElementById("help_2_modal");
+var help_3_modal = document.getElementById("help_3_modal");
+var help_4_modal = document.getElementById("help_4_modal");
+var slug_modal = document.getElementById("slug_modal");
+var ether_modal = document.getElementById("ether_modal");
+var road_modal = document.getElementById("road_modal");
+var event_modal = document.getElementById("event_modal");
+var stats_modal = document.getElementById("stats_modal");
+var snailthrone_modal = document.getElementById("snailthrone_modal");
+var buy_modal = document.getElementById("buy_modal");
+var skip_modal = document.getElementById("skip_modal");
+var throw_modal = document.getElementById("throw_modal");
+var jump_modal = document.getElementById("throw_modal");
+var trade_modal = document.getElementById("trade_modal");
+var math_modal = document.getElementById("math_modal");
+
+// Array to close them all
+var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal];
 
 // Close modal on game info
 function CloseModal() {
-	snag_modal.style.display = "none";
-	start_modal.style.display = "none";
+	for(i = 0; i < modalArray.length; i++){
+		modalArray[i].style.display = "none";
+	}
+}
+
+// Show modals
+function showModal(_modal){
+	_modal.style.display = "block";
+}
+
+// Close then show modal
+function closeThenShowModal(_modal){
+	CloseModal();
+	showModal(_modal);
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == snag_modal || event.target == start_modal) {
-        snag_modal.style.display = "none";
-		start_modal.style.display = "none";
-    }
+	for(i = 0; i < modalArray.length; i++){
+		if (event.target == modalArray[i]) {
+			CloseModal();
+		}
+	}
 }
 
 /* PAST EVENT LOG */
@@ -88,6 +123,7 @@ var a_playerMile;
 var a_trade6000;
 var a_mileReward;
 
+var l_etherDrained = 0;
 var l_speed = 0;
 var MAX_SPEED = 1000000;
 var MIN_SPEED = 100000;
@@ -101,6 +137,7 @@ var s_hyperState = 0; //0: no hyperspeed, 1: hyperspeed, 2: round over
 var f_buy;
 
 var m_account = "waiting for web3";
+var no_driver = "0xABF3E252006D805Cce3C7219A929B83465F2a46e";
 
 var doc_contractBalance = document.getElementById('contractbalance');
 var doc_round = document.getElementById('round');
@@ -108,21 +145,28 @@ var doc_roundPot = document.getElementById('roundpot');
 var doc_hyperState = document.getElementById('hyperstate');
 var doc_timer = document.getElementById('timer');
 var doc_speed = document.getElementById('speed');
-var doc_driver = document.getElementById('driver');
 var doc_driverState = document.getElementById('driverstate');
+var doc_gameState = document.getElementById('gamestate');
 var doc_slugPot = document.getElementById('slugpot');
 var doc_thronePot = document.getElementById('thronepot');
+var doc_buyCost = document.getElementById('buyCost');
 var doc_buy200 = document.getElementById('buy200');
 var doc_fieldBuySlug = document.getElementById('fieldBuySlug');
 var doc_playerSlug = document.getElementById('playerslug');
 var doc_playerReward = document.getElementById('playerreward');
+var doc_playerReward2 = document.getElementById('playerreward2');
 var doc_playerMile = document.getElementById('playermile');
+var doc_playerMile2 = document.getElementById('playermile2');
+var doc_playerMileAfter = document.getElementById('playermileafter');
 var doc_time200 = document.getElementById('time200');
 var doc_timeGetSlug = document.getElementById('timeGetSlug');
 var doc_trade6000Mile = document.getElementById('trade6000mile');
 var doc_mileReward = document.getElementById('milereward');
 var doc_maxSlug = document.getElementById('maxslug');
 var doc_actionState = document.getElementById('actionstate');
+var doc_etherDrained = document.getElementById('drained');
+var doc_nextLoop = document.getElementById('nextloop');
+var doc_pauseState = document.getElementById('pausestate');
 
 /* UTILITIES */
 
@@ -165,6 +209,13 @@ function dateLog(_blockNumber) {
 	datetext = datetext.split(' ')[0];
 }
 
+//Pause and unpause animation
+function pauseAnimation() {
+	//doc_pauseState.innerHTML = '<img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()">';
+	var _road = document.getElementById('ugh');
+	_road.style.backgroundimage = 'url("img/gif7.jpg")';
+}
+	
 /* UPDATE */
 
 function initUpdate(){
@@ -213,50 +264,60 @@ function fastUpdate(){
 function updateText(){
 	doc_contractBalance.innerHTML = a_contractBalance;
 	doc_round.innerHTML = a_round;	
+	doc_nextLoop.innerHTML = parseInt(a_round + 1);
 	doc_roundPot.innerHTML = a_roundPot;
 	doc_slugPot.innerHTML = a_slugPot;
-	doc_thronePot.innerHTML = a_thronePot;	
+	doc_thronePot.innerHTML = a_thronePot;
+	doc_buyCost.innerHTML = a_buyCost;
 	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(4);
 	doc_playerSlug.innerHTML = a_playerSlug;
 	doc_playerReward.innerHTML = a_playerBalance + a_playerDiv;
+	doc_playerReward2.innerHTML = a_playerBalance + a_playerDiv;
 	doc_playerMile.innerHTML = a_playerMile;
+	doc_playerMile2.innerHTML = a_playerMile;
+	doc_playerMileAfter.innerHTML = parseInt(a_playerMile % 6000);
 	doc_time200.innerHTML = parseFloat(a_getCost * 200).toFixed(4);
 	doc_trade6000Mile.innerHTML = a_trade6000;
 	doc_mileReward.innerHTML = a_mileReward;
 	doc_maxSlug.innerHTML = a_maxSlug;
 	doc_timeGetSlug.innerHTML = parseInt((a_playerDiv + a_playerBalance) / (a_getCost));
 	
-	if(a_driver == m_account){
-		doc_driver.innerHTML = 'YOU';
-	} else {
-		doc_driver.innerHTML = formatEthAdr(a_driver);
-	}
-	
 	if(s_hyperState == 0){
 		if(a_driver == m_account){
-			doc_driverState.innerHTML = ' hold the wheel!<br> Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
-			doc_actionState.innerHTML = '<h4>KEEP GOING!</h4>';
+			doc_driverState.innerHTML = 'YOU hold the wheel!';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(jump_modal)">JUMP OUT</button><h5 class="black-shadow">Drive to hyperspace</h5>';
 		} else {
-			doc_driverState.innerHTML = ' holds the wheel!<br> Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
+			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' holds the wheel!';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
+		doc_gameState.innerHTML = 'Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
 		//doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
 		if(a_driver == m_account){
-			doc_driverState.innerHTML = ' drain the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webJumpOut()">JUMP OUT</button>';
+			doc_driverState.innerHTML = 'YOU drain the pot!'; 
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(jump_modal)">JUMP OUT</button><h5 class="black-shadow">Secure your gains</h5>';
 		} else {
-			doc_driverState.innerHTML = ' drains the pot!<br> Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
-			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webThrowSlug()">THROW SLUGS</button>';
+			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' drains the pot!';
+			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
+		doc_gameState.innerHTML = 'Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
 		doc_speed.innerHTML = "1000.000";
 	} else if (s_hyperState == 2) {
-		doc_driverState.innerHTML = ' WON THE POT!<br> Press "Time Jump" to start a new race';
+		if(a_driver == m_account){
+			doc_driverState.innerHTML = 'YOU WON THE POT!';
+		} else {
+			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' WON THE POT!';
+		}
+		doc_gameState.innerHTML = 'Press "Time Jump" to start a new loop';
 		doc_hyperState.innerHTML = 'TIME JUMP READY!';
 		doc_speed.innerHTML = 'Infinity';
-		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="webTimeJump()">TIME JUMP</button>';
+		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(time_modal)">TIME JUMP</button><h5 class="black-shadow">Start a new Loop</h5>';
+	}
+	
+	if(a_driver == no_driver){
+		doc_driverState.innerHTML = 'The Lambo is swerving!';
 	}
 }
 
@@ -320,7 +381,8 @@ function updateLocalTimer(){
 	if(_timer < 0 && _timer > -60000){ //for a minute after we hit 0, wait for blockchain confirmation
 		doc_timer.innerHTML = 'On the edge of timejump...';
 	}
-		
+	
+	//timer calculation
 	if(s_hyperState < 2){
 		var _hours = Math.floor(_timer / 3600000);
 		if(_hours < 10) { _hours = "0" + _hours }
@@ -335,6 +397,7 @@ function updateLocalTimer(){
 		doc_timer.innerHTML = _hours + ":" + _minutes + ":" + _seconds + "." + _milliseconds;
 	}
 	
+	//miles calculation
 	if(s_hyperState == 0){
 		l_speed = MAX_SPEED - (_timer / ACCEL_FACTOR);
 		if(l_speed < MIN_SPEED) { l_speed = MIN_SPEED };
@@ -344,7 +407,14 @@ function updateLocalTimer(){
 		if(_decimiles < 10) { _decimiles = "0" + _decimiles }
 		
 		doc_speed.innerHTML = _miles + "." + _decimiles;
-	}	
+	}
+
+	//ether drain calculation
+	if(s_hyperState == 1){
+		l_etherDrained = (3600000 - _timer) * a_roundPot * 0.0001;
+		
+		doc_etherDrained.innerHTML = parseFloat(l_etherDrained).toFixed(5);
+	}
 }
 
 //Current slug pot
