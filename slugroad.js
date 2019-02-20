@@ -48,7 +48,7 @@ var snailthrone_modal = document.getElementById("snailthrone_modal");
 var buy_modal = document.getElementById("buy_modal");
 var skip_modal = document.getElementById("skip_modal");
 var throw_modal = document.getElementById("throw_modal");
-var jump_modal = document.getElementById("throw_modal");
+var jump_modal = document.getElementById("jump_modal");
 var trade_modal = document.getElementById("trade_modal");
 var math_modal = document.getElementById("math_modal");
 
