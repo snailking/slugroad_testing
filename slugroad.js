@@ -73,6 +73,12 @@ function closeThenShowModal(_modal){
 	showModal(_modal);
 }
 
+// Close modal then call function
+function closeThenFunc(_func){
+	CloseModal();
+	_func();
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	for(i = 0; i < modalArray.length; i++){
