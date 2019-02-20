@@ -296,7 +296,7 @@ function updateText(){
 			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' holds the wheel!';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
-		doc_gameState.innerHTML = 'Distance driven: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' miles';
+		doc_gameState.innerHTML = 'Distance driven: ' + parseInt(a_driverMileNew) + ' miles';
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
 		//doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
@@ -307,7 +307,7 @@ function updateText(){
 			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' drains the pot!';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
-		doc_gameState.innerHTML = 'Ether drained: ' + parseInt(a_driverMileOld + a_driverMileNew) + ' ETH';
+		doc_gameState.innerHTML = 'Ether drained: ' + l_etherDrained + ' ETH';
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
 		doc_speed.innerHTML = "1000.000";
 	} else if (s_hyperState == 2) {
