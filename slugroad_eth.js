@@ -1520,7 +1520,7 @@ function runLog(){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH on their way out!";
 							} else if(result[i].event == "TimeWarped"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result.args.loop - 1) + " is over. " + formatEthAdr(result.args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH. Loop " + result.args.loop + " starts!";							
-							} else if(result[i].event == "Newloop"){
+							} else if(result[i].event == "NewLoop"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME PARADOX! Loop " + parseInt(result.args.loop - 1) + " ends without a driver in car. Begin Loop " + result.args.loop + "...";								
 							} else if(result[i].event == "PaidThrone"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " paid tribute to the SnailThrone! " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH has been sent.";										
@@ -1651,7 +1651,7 @@ timejumpedEvent.watch(function(error, result){
 	}
 });
 
-var newloopEvent = myContract.Newloop();
+var newloopEvent = myContract.NewLoop();
 newloopEvent.watch(function(error, result){
     if(!error){
 		////////////////console.log(result);
