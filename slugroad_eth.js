@@ -450,7 +450,7 @@ function updateThronePot(){
 
 //Current speed
 function updateSpeed(){
-	var _blocktime = Math.loop((new Date()).getTime() / 1000); //current blocktime should be Unix timestamp
+	var _blocktime = Math.round((new Date()).getTime() / 1000); //current blocktime should be Unix timestamp
 	ComputeSpeed(_blocktime, function(result) {
 		a_speed = result;
 	});
