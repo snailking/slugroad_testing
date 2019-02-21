@@ -112,7 +112,7 @@ var a_timer;
 var a_speed;
 var a_contractBalance;
 var a_loop = 0;
-var a_loopPot;
+var a_loopChest;
 var a_slugBank;
 var a_thronePot;
 var a_driver = "";
@@ -148,7 +148,7 @@ var no_driver = "0xabf3e252006d805cce3c7219a929b83465f2a46e";
 
 var doc_contractBalance = document.getElementById('contractbalance');
 var doc_loop = document.getElementById('loop');
-var doc_loopPot = document.getElementById('looppot');
+var doc_loopChest = document.getElementById('loopChest');
 var doc_hyperState = document.getElementById('hyperstate');
 var doc_timer = document.getElementById('timer');
 var doc_speed = document.getElementById('speed');
@@ -239,7 +239,7 @@ function mainUpdate(){
 	updateContractBalance();
 	updateloop();
 	updateslugBank();
-	updateloopPot();
+	updateloopChest();
 	updateThronePot();
 	updateSpeed();
 	updateDriver();
@@ -275,7 +275,7 @@ function updateText(){
 	doc_contractBalance.innerHTML = a_contractBalance;
 	doc_loop.innerHTML = a_loop;	
 	doc_nextLoop.innerHTML = parseInt(a_loop + 1);
-	doc_loopPot.innerHTML = a_loopPot;
+	doc_loopChest.innerHTML = a_loopChest;
 	doc_slugBank.innerHTML = a_slugBank;
 	doc_thronePot.innerHTML = a_thronePot;
 	doc_buyCost.innerHTML = a_buyCost;
@@ -421,7 +421,7 @@ function updateLocalTimer(){
 
 	//ether drain calculation
 	if(s_hyperState == 1){
-		l_etherDrained = (3600000 - _timer) * a_loopPot * 0.0001;
+		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0001;
 		
 		doc_etherDrained.innerHTML = parseFloat(l_etherDrained).toFixed(5);
 	}
@@ -434,10 +434,10 @@ function updateslugBank(){
 	});
 }
 
-//Current looppot
-function updateloopPot(){
-	loopPot(function(result) {
-		a_loopPot = formatEthValue(web3.fromWei(result,'ether'));
+//Current loopChest
+function updateloopChest(){
+	loopChest(function(result) {
+		a_loopChest = formatEthValue(web3.fromWei(result,'ether'));
 	});
 }
 
@@ -1513,7 +1513,7 @@ function runLog(){
 							} else if(result[i].event == "BecameDriver"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " became the driver. Onwards to hyperspeed!";
 							} else if(result[i].event == "TookWheel"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopPot + " ETH.";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopChest + " ETH.";
 							} else if(result[i].event == "ThrewSlug"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " threw slugs at the windshield! The car swerves...";
 							} else if(result[i].event == "JumpedOut"){
@@ -1609,7 +1609,7 @@ tookwheelEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopPot + " ETH.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopChest + " ETH.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
