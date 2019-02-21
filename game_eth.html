@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Title, Favicon -->
+		<title>Slugroad</title>
+		<link rel="shortcut icon" href="favicon.png" type="image/x-icon">		
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="theme_bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="theme_animista.css">
+		<link rel="stylesheet" type="text/css" href="theme_slugroad.css">		
+	</head>
+	
+	<body align="center">
+		<!-- TITLE -->
+		<div class="info img-border2">
+			<div class="row">
+				<div class="col-sm">
+					<img src="img/slug_logo.png"><img src="img/road_logo.png">
+				</div>
+				<div class="col-sm" align="right">
+					<img class="img-help2" src="img/question_circle.png" onclick="showModal(help_1_modal)"></a>
+					<a href="https://ropsten.etherscan.io/address/0xb9e74e44EFF00A79C69768c0547484637E603bBc" target="_blank"><img class="img-help2" src="img/contract_circle.png"></a>
+					<a href="https://discord.gg/JU8P4Ru" target="_blank"><img class="img-help2" src="img/discord_circle.png"></a>
+					<a href="https://twitter.com/EtherSnailFarm" target="_blank"><img class="img-help2" src="img/twitter_circle.png"></a>
+					<a href="https://reddit.com/r/snailthrone" target="_blank"><img class="img-help2" src="img/reddit_circle.png"></a>
+					<a href="" target="_blank"><img class="img-help2" src="img/medium_circle.png"></a>
+					<a href="https://t.me/snailthrone" target="_blank"><img class="img-help2" src="img/telegram_circle.png"></a>
+					<a href="https://snailking.github.io/snailthrone" target="_blank"><img class="img-help2" src="img/snailthrone_circle.png"></a>
+				</div>
+			</div>
+		</div><br>
+		<!-- TRACK SELECTION -->
+		<div class="container black-shadow" align="center">
+			<div class="row">
+				<div class="col-sm" align="right">
+					<img src="img/ether.png" class="pulse" height="64px">
+				</div>
+				<div class="col-sm">
+					<img src="img/poa_ball.png" class="pulse" height="64px">
+				</div>
+				<div class="col-sm" align="left">
+					<img src="img/xdai_logo.png" class="pulse" height="64px">
+				</div>
+			</div>
+		</div><br>
+		<!-- CAR WINDOW -->
+		<div id="roadwindow" class="container road-background black-shadow img-border" align="center">
+			<div class="row">
+				<div class="col-sm-2" align="left">
+					<span id="pausestate"><img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()"></span>
+				</div>
+				<div class="col-sm">
+					<h3 style="display: inline-block;">LOOP <span id="round">1</span> - Ethereum Track</h3>
+				</div>
+				<div class="col-sm-2" align="right">
+					<img class="img-help" src="img/question_circle.png" onclick="showModal(car_1_modal)">
+				</div>
+			</div>		 
+			<h1><span id="roundpot">?</span> ETH</h3><br>
+			<div class="row">
+				<div class="col-sm">
+					<h5><span id="hyperstate">Entering Hyperspeed in:</span></h4>
+					<h1><span id="timer">???:??:??.???</span></h2><br>
+				</div>
+				<div class="col-sm">
+					<h5>Current speed:</h4>
+					<h1><span id="speed">???.???</span> MPH</h2><br>
+				</div>
+			</div>
+			<h3><span id="driverstate">0x???????? holds the wheel!</span></h4>
+			<h3><span id="gamestate">Distance driven: ?????? miles</span></h4>			
+		</div><br>
+		<!-- PLAYER STATS -->
+		<div class="container" align="center">
+			<div class="img-border2 info2">
+				<div class="row">
+					<div class="col-sm img-border2 info">
+						<img src="img/slug.png" class="pulse" height="32px" onclick="showModal(slug_modal)"> <h5 style="display: inline-block;"><span id="playerslug">?????</span></h5> 
+					</div>
+					<div class="col-sm img-border2 info">
+						<img src="img/ether.png" class="pulse" height="32px" onclick="showModal(ether_modal)"> <h5 style="display: inline-block;"><span id="playerreward">?.???</span></h5>
+					</div>
+					<div class="col-sm img-border2 info">
+						<img src="img/road.png" class="pulse" height="32px" onclick="showModal(road_modal)"> <h5 style="display: inline-block;"><span id="playermile">????</span></h5>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div><br>
+		<!-- ACTIONS -->
+		<div class="container" align="center">
+			<div class="">
+				<div class="row">
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="showModal(buy_modal)">BUY SLUGS</button>
+						<h5 class="black-shadow">200 slugs for <span id="buy200">?.???</span> ETH</h5>
+						<br>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="showModal(skip_modal)">SKIP AHEAD</button>
+						<h5 class="black-shadow">200 slugs for <span id="time200">?.???</span> ETH</h5>
+						<br>
+					</div>
+					<div class="col-sm">
+						<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5></span>
+						<br>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="showModal(trade_modal)">TRADE MILES</button>
+						<h5 class="black-shadow">For every 6000 miles, get <span id="trade6000mile">?.???</span> ETH</h5>
+						<br>
+					</div>
+					<div class="col-sm">
+						<button class="btn btn-lg btn-info" onclick="webWithdrawBalance()">WITHDRAW</button>
+						<h5 class="black-shadow">Withdraw all Ether to your wallet</h5>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<!-- LOG -->
+		<div class="container img-border info">
+			<div class="row">
+				<div class="col-sm">
+					<h3 style="display: inline-block;">EVENTS</h3> <img class="img-help" src="img/question_circle.png" onclick="showModal(event_modal)">
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-info" onclick="runLog()">Get Past Events</button>
+				</div>
+			</div>
+			<div class="scroll-box img-border2 info2" id="logboxscroll">
+				<p><span id="eventlog">[Waiting for events...]</span></p>
+			</div>
+		</div><br>
+		<!-- STATS -->
+		<div class="container img-border info">
+			<div class="row">
+				<div class="col-sm">
+					<h3 style="display: inline-block;">STATS</h3> <img class="img-help" src="img/question_circle.png" onclick="showModal(stats_modal)">
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-info" onclick="webPayThrone()">Send Tribute</button>
+				</div>
+			</div>
+			<div class="row img-border2 info2" align="center">
+				<div class="col-sm">
+					<h4>Slugs Alive</h5><br><br>
+					<h4><span id="maxslug">??????</span></h5>
+				</div>
+				<div class="col-sm">
+					<h4>Contract Balance</h5><br><br>
+					<h4><span id="contractbalance">??.??</span> ETH</h5>
+				</div>
+				<div class="col-sm">
+					<h4>Slug Pot</h5><br><br>
+					<h4><span id="slugpot">??.??</span> ETH</h5>
+				</div>
+				<div class="col-sm">
+					<h4>Throne Pot</h5><br><br>
+					<h4><span id="thronepot">??.??</span> ETH</h5>
+				</div>
+			</div>
+		</div><br>
+		<!-- SNAILTHRONE -->
+		<div class="container pulse" align="center">
+			<h1><a href="https://snailking.github.io/snailthrone">>>TRY OUT SNAILTHRONE<<</a></h1>
+		</div>
+		<!-- BUY MODAL -->
+		<div id="buy_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">BUY SLUGS</h2><br>
+					<div class="info padding img-border2">
+						<div class="row">
+							<div class="col-sm">
+								<h5>Cost per slug: <span id="buyCost">?</span> ETH</h5>
+							</div>
+							<div class="col-sm">
+								<h5>Spend: <input type="text" id="fieldBuy" value="0.1" size="3"> ETH</h5>
+							</div>
+							<div class="col-sm">
+								<h5>You will get: <span id="fieldBuySlug">200</span> Slugs</h5>
+							</div>
+						</div>
+						<br>
+						<h5>Buy at least 200 Slugs to become the Driver.</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webBuySlug)">BUY SLUGS</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- SKIP MODAL -->
+		<div id="skip_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">SKIP AHEAD</h2><br>
+					<div class="info padding img-border2">
+						<div class="row">
+							<div class="col-sm">
+								<h5>Cost per slug: <span id="getCost">?</span> ETH</h5>
+							</div>
+							<div class="col-sm">
+								<h5>You have: <span id="playerreward2">?</span> ETH</h5>
+							</div>
+							<div class="col-sm">
+								<h5>You will get: <span id="timeGetSlug">?</span> Slugs</h5>
+							</div>
+						</div>
+						<br>
+						<h5>Get at least 200 Slugs to become the Driver.</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webSkipAhead)">SKIP AHEAD</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ACTION MODAL -->
+		<div id="throw_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">THROW SLUGS</h2><br>
+					<div class="info padding img-border2">
+						<h5>Sacrifice 200 Slugs and become the Driver.</h5>
+						<h5>Out of Hyperspeed: the Timer will bump back by 6 minutes.</h5>
+						<h5>During Hyperspeed: the Timer will go back to 6 minutes before Hyperspeed.</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webThrowSlug)">THROW SLUG</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="jump_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">JUMP OUT</h2><br>
+					<div class="info padding img-border2">
+						<h5>Jump out of the window to secure your gains!</h5>
+						<br>
+						<h5>You have currently drained <span id="drained">?</span> ETH</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webJumpOut)">JUMP OUT</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="time_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">TIME WARP</h2><br>
+					<div class="info padding img-border2">
+						<h5>Initiate the Time Warp to enter Loop <span id="nextloop">?</span></h5>
+						<br>
+						<h5>Timer resets to 7 days, and you become the Driver.</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webTimeJump)">TIME WARP</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- TRADE MODAL -->
+		<div id="trade_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">TRADE MILES</h2><br>
+					<div class="info padding img-border2">
+						<h5>You will get <span id="milereward">0.000</span> ETH for your <span id="playermile2">6464</span> miles.
+						<br>
+						<h5>Miles remaining after trade: <span id="playermileafter">464</span></h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webTradeMile)">TRADE MILES</button>
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- HELP MODAL -->
+		<div id="help_1_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">1/4</h3> <img class="img-dark" src="img/arrow_left.png"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_2_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4 class="uppercase">Buy Slugs with ETH.</h4>
+						<h5>Your Slugs give you divs for every buy after yours.</h5>
+						<br>
+						<h4 class="uppercase">Skip Ahead to get even more Slugs.</h4>
+						<h5>Your divs will give you more Slugs for a lower price.</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="help_2_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">2/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_1_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_3_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4 class="uppercase">Hijack the Lambo, through 1 of 2 options:</h4>
+						<h5>a) get at least 200 Slugs in one Buy or Skip.</h5>
+						<h5>b) throw 200 slugs at the windshield.</h5>
+						<br>
+						<h4 class="uppercase">As the driver, hold the wheel</h4>
+						<h5>The Lambo accelerates progressively.</h4>
+						<h5>The Driver earns miles he can trade for ETH (once he's not the driver anymore).</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="help_3_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">3/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_2_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_4_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4 class="uppercase">Drain the pot during Hyperspeed</h5>
+						<h5>Once the Lambo reaches 1000 MPH, we enter Hyperspeed.</h5>
+						<h5>During Hyperspeed, the pot starts being drained.</h5>
+						<br>
+						<h4 class="uppercase">Ride it out to win the pot</h5>
+						<h5>If the Driver holds the wheel for the full hour of Hyperspeed, he wins the pot.</h5>
+						<h5>If another player hijacks the Lambo, the Driver gets nothing.</h5>
+						<br>
+						<h4 class="uppercase">Jump Out to secure your gains</h5>
+						<h5>The Driver can Jump Out before Hyperspeed ends, and get the ETH currently drained.</h5>
+						<h5>After Jumping Out, the Lambo swerves without a driver.</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="help_4_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">4/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_3_modal)"><img class="img-dark" src="img/arrow_right.png">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4 class="uppercase">Time Jump ready once the Hyperspeed Timer hits 0</h4>
+						<h5>If there is a Driver, he receives the pot.</h5>
+						<h5>Without a Driver, the pot carries over to the next Loop.</h5>
+						<br>
+						<h4 class="uppercase">Next Loop starts immediately</h5>
+						<h5>The RoundPot is refueled by the SlugPot, and the Lambo starts driving at 100 MPH.</h5>
+						<h5>Your Slugs, your Miles and your Rewards carry over.</h5>
+						<br>
+						<h4><i>Note: whoever triggers the Time Jump gets to become the Driver for free!</i></h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+						<button type="button" class="btn btn-info" onclick="closeThenShowModal(math_modal)">Show me the math</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- MATH MODAL -->
+		<div id="math_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow" align="center">NUMBERS</h2><br>
+					<h3>LAMBO</h3>
+					<div class="info2 padding img-border2">
+						<h5>Speed starts at a min of 100 MPH and rises to a maximum of 1000 MPH over 7 days.</h5>
+						<h5>At 1000 MPH, the Lambo enters Hyperspeed for 1 hour.</h5>
+						<h5>During Hyperspeed, the Driver drains 0.01% of the pot per second.</h5>
+						<h5>If the Driver holds for the full hour, he gets the full pot.</h5>
+					</div>
+					<h3>HIJACK</h3>
+					<div class="info2 padding img-border2">
+						<h5>A hijack costs 200 slugs, whether bought or thrown.</h5>
+						<h5>Each hijack bumps the timer back by 6 minutes. Speed decreases in proportion.</h5>
+						<h5>If we're in Hyperspeed, the timer resets to 6 minutes before Hyperspeed.</h5>
+						<h5>If the Driver jumps out, the timer resets to 1 hour before Hyperspeed.</h5>
+					</div>
+					<h3>SLUG</h3>
+					<div class="info2 padding img-border2">
+						<h5>The price of one Slug on a buy is: (0.000025 + (roundpot/10000)) / loop</h5>
+						<h5>While Skipping Ahead, the price of one Slug is: (0.000025 + (roundpot/10000)) / (round + 1)</h5>
+						<h5>Slugs entitle their owners to proportional dividends compared to the current number of Slugs alive.</h5>
+					</div>
+					<h3>MILES</h3>
+					<div class="info2 padding img-border2">
+						<h5>6000 miles can be traded for 1% of the pot.</h5>
+					</div>
+					<h3>POT SPLIT</h3>
+					<div class="info2 padding img-border2">
+						<h5>Each payable transaction is split as follows:</h5>
+						<h5>- 60% divs</h5>
+						<h5>- 20% slugPot (reserve for next Loops)</h5>
+						<h5>- 10% roundPot</h5>
+						<h5>- 10% thronePot</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CAR MODAL -->
+		<div id="car_1_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">LOOP</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">1/4</h3> <img class="img-dark" src="img/arrow_left.png"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(car_2_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4>On a new Loop, the Lambo starts driving at 100 MPH.</h4>
+						<h4>From that speed, it takes 7 days to reach Hyperspeed.</h4>
+						<h4>If the Lambo drives through Hyperspeed for a full hour, the Loop ends.</h4>
+						<h4>A new Loop starts, with half of the slugpot added to the roundpot.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="car_2_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">TIMER</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">2/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(car_1_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(car_3_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4>When the Lambo reaches 1000 MPH, we enter Hyperspeed.</h4>
+						<h4>Acceleration is constant, so the Timer is directly correlated to speed.</h4>
+						<h4>Each hijack of the car decreases the speed, bumping the Timer back up by 6 minutes.</h4>
+						<h4>During Hyperspeed, a hijack resets the Timer to 6 minutes before Hyperspeed.</h4>
+						<h4>If the Driver jumps out, the Timer resets to 1 hour before Hyperspeed.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="car_3_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">SPEED</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">3/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(car_2_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(car_4_modal)">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4>The Lambo starts at 100 MPH, and can never go below 100 MPH.</h4>
+						<h4>Speed rises consistently, at a rate of about 5.35 MPH per hour.</h4>
+						<h4>At 1000 MPH, the Lambo enters Hyperspeed.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="car_4_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<div class="row">
+						<div class="col-sm">
+							<h1 class="black-shadow">DRIVER</h2><br>
+						</div>
+						<div class="col-sm" align="right">
+							<h3 style="display: inline-block;">4/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(car_3_modal)"><img class="img-dark" src="img/arrow_right.png">
+						</div>
+					</div>
+					<div class="info2 padding img-border2">
+						<h4>The Driver earns Miles as he drives.</h4>
+						<h4>Once the Driver steps out of the car, he can trade these Miles for ETH.</h4>
+						<h4>If the Driver enters Hyperspeed, he starts draining the roundpot.</h4>
+						<h4>Jumping Out will secure his gains, but renounce his spot.</h4>
+						<h4>Without a Driver, the Lambo swerves endlessly until a new hijack happens.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- PLAYER MODAL -->
+		<div id="slug_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">SLUGS</h2><br>
+					<div class="info2 padding img-border2">
+						<h4>Buy Slugs to earn divs on every Slug buy.</h4>
+						<h5>The price of Slugs scales with the roundpot, then divided by the Loop number.</h4>
+						<h5>The higher the Loop, the lowest the price.</h4>
+						<br>
+						<h4>Skip Ahead to get Slugs at a lower price.</h4>
+						<h5>With your ETH rewards, you can buy Slugs at the price they would cost in the next Loop</h4>
+						<h5>Skipping Ahead is always cheaper than Buying!</h4>
+						<br>
+						<h4>Get at least 200 Slugs in one Buy or Skip, and you become the Driver.</h4>
+						<h5>You can also throw 200 Slugs at the windshield, and their sacrifice will let you be the driver.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="ether_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">REWARDS</h2><br>
+					<div class="info2 padding img-border2">
+						<h4>All your ETH rewards from the game end up here.</h4>
+						<h5>Consume them to Skip Ahead and get more Slugs at an advantageous rate.</h4>
+						<h5>You can also withdraw your rewards at any time back to your wallet.</h4>
+						<br>
+						<h4>Your rewards will never disappear. Their safety is guaranteed by the smart contract.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="road_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">MILES</h2><br>
+					<div class="info2 padding img-border2">
+						<h4>Earn miles as you drive.</h4>
+						<h5>Once you're not the Driver anymore, you can trade your miles.</h4>
+						<h5>For every 6000 miles you accumulate, get 1% of the roundpot.</h4>
+						<br>
+						<h4>You can trade more than 6000 miles at once. Your leftover miles will remain.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- EVENT MODAL -->
+		<div id="event_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">EVENTS</h2><br>
+					<div class="info2 padding img-border2">
+						<h5>Every action taken by any player is logged here.</h5><br>
+						<h5>Click on "Get Past Events" to get previous history.</h5><br>
+						<h5>Please note blockchain data can lag behind, but it should be roughly accurate within a couple minutes range.</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- STATS MODAL -->
+		<div id="stats_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">STATISTICS</h2><br>
+					<div class="info2 padding img-border2">
+						<h5>Slugs Alive: total number of Slugs bought and currently alive</h5>
+						<h5>Contract Balance: total number of ether in contract</h5>
+						<h5>Slug Pot: reserve pot to sustain the roundpot. On a new Loop, half of it feeds the roundpot.</h5>
+						<h5>Throne Pot: this pot can be sent to the SnailThrone at any time, rewarding SnailThrone players with divs</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+						<button type="button" class="btn btn-info" onclick="closeThenShowModal(snailthrone_modal)">SnailThrone?</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- SNAILTHRONE MODAL -->
+		<div id="snailthrone_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">SNAILTHRONE</h2><br>
+					<div class="info2 padding img-border2" align="center">
+						<h4>The SnailThrone is a mastergame rewarding its players with ETH from other Snail games.</h5>
+						<h5>Anyone can join the SnailThrone.</h5>
+						<br>
+						<h3 class="uppercase">Check out the SnailThrone</h3>
+						<a href="https://snailking.github.io/snailthrone" target="_blank"><img class="img-help2" height="96px" src="img/snailthrone_circle.png"></a>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">No thanks, I'll pass on getting even more divs</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- JAVASCRIPT -->
+		<script src="slugroad.js"></script>				
+		<script>
+			initUpdate();
+		</script>		
+	</body>
+</html>
