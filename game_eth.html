@@ -22,7 +22,7 @@
 				</div>
 				<div class="col-sm" align="right">
 					<img class="img-help2" src="img/question_circle.png" onclick="showModal(help_1_modal)"></a>
-					<a href="https://ropsten.etherscan.io/address/0xb9e74e44EFF00A79C69768c0547484637E603bBc" target="_blank"><img class="img-help2" src="img/contract_circle.png"></a>
+					<a href="https://ropsten.etherscan.io/address/0xBd91eCBFFED68812ACE473b5F31049E4DBFC511D" target="_blank"><img class="img-help2" src="img/contract_circle.png"></a>
 					<a href="https://discord.gg/JU8P4Ru" target="_blank"><img class="img-help2" src="img/discord_circle.png"></a>
 					<a href="https://twitter.com/EtherSnailFarm" target="_blank"><img class="img-help2" src="img/twitter_circle.png"></a>
 					<a href="https://reddit.com/r/snailthrone" target="_blank"><img class="img-help2" src="img/reddit_circle.png"></a>
@@ -142,7 +142,7 @@
 					<h3 style="display: inline-block;">STATS</h3> <img class="img-help" src="img/question_circle.png" onclick="showModal(stats_modal)">
 				</div>
 				<div class="col-sm" align="right">
-					<button class="btn btn-info" onclick="webPayThrone()">Send Tribute</button>
+					<button class="btn btn-info" onclick="showModal(paythrone_modal)">Send Tribute</button>
 				</div>
 			</div>
 			<div class="row img-border2 info2" align="center">
@@ -644,8 +644,26 @@
 				</div>
 			</div>
 		</div>
+		<!-- PAY THRONE MODAL -->
+		<div id="paythrone_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">SEND TRIBUTE</h2><br>
+					<div class="info2 padding img-border2" align="center">
+						<h4>Send the current ThronePot to the SnailThrone.</h5>
+						<h5>SnailThrone holders will be rewarded in the form of dividends.</h5>
+						<br>
+						<h4>Sending the ThronePot is an action available to everyone, and doesn't affect your personal rewards.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="closeThenFunc(webPayThrone)">SEND TRIBUTE</button>
+						<a href="https://snailking.github.io/snailthrone"><button type="button" class="btn btn-info">GO TO SNAILTHRONE</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- JAVASCRIPT -->
-		<script src="slugroad.js"></script>				
+		<script src="slugroad_eth.js"></script>				
 		<script>
 			initUpdate();
 		</script>		

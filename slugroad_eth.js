@@ -51,9 +51,10 @@ var throw_modal = document.getElementById("throw_modal");
 var jump_modal = document.getElementById("jump_modal");
 var trade_modal = document.getElementById("trade_modal");
 var math_modal = document.getElementById("math_modal");
-
+var paythrone_modal = document.getElementById("paythrone_modal");
+ 
 // Array to close them all
-var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal];
+var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal];
 
 // Close modal on game info
 function CloseModal() {
