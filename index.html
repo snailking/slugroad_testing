@@ -13,31 +13,83 @@
 		<link rel="stylesheet" type="text/css" href="theme_slugroad.css">		
 	</head>
 	
-	<body align="center">
+	<body>
 		<!-- TITLE -->
-		<div class="jumbotron" align="center">
-			<div class="snail">
-				<a href="#info"><img height="64" src="img/question_circle.png"></a>
-				<a href="https://etherscan.io/address/0x2a26b5d1eed284f403492044ef4106ef0ed9c60a" target="_blank"><img height="64" src="img/contract_circle.png"></a>
-				<a href="https://discord.gg/JU8P4Ru" target="_blank"><img height="64" src="img/discord_circle.png"></a>
-				<a href="https://twitter.com/EtherSnailFarm" target="_blank"><img height="64" src="img/twitter_circle.png"></a>
-				<a href="https://reddit.com/r/snailthrone" target="_blank"><img height="64" src="img/reddit_circle.png"></a>
-				<a href="https://medium.com/@thesnailking/lords-of-the-snails-hot-potato-dapp-the-right-way-f1de6646065" target="_blank"><img height="64" src="img/medium_circle.png"></a>
-				<a href="https://t.me/snailthrone" target="_blank"><img height="64" src="img/telegram_circle.png"></a>
-				<a href="https://snailking.github.io/snailthrone" target="_blank"><img height="64" src="img/snailthrone_circle.png"></a>
+		<div class="info img-border2">
+			<div class="row">
+				<div class="col-sm">
+					<img src="img/slug_logo.png"><img src="img/road_logo.png">
+				</div>
+				<div class="col-sm" align="right">
+					<a href="https://ropsten.etherscan.io/address/0x6cf592d1687041147a20c6cc1504715864a52752" target="_blank"><img class="img-help2" src="img/contract_circle.png"></a>
+					<a href="https://discord.gg/JU8P4Ru" target="_blank"><img class="img-help2" src="img/discord_circle.png"></a>
+					<a href="https://twitter.com/EtherSnailFarm" target="_blank"><img class="img-help2" src="img/twitter_circle.png"></a>
+					<a href="https://reddit.com/r/snailthrone" target="_blank"><img class="img-help2" src="img/reddit_circle.png"></a>
+					<a href="" target="_blank"><img class="img-help2" src="img/medium_circle.png"></a>
+					<a href="https://t.me/snailthrone" target="_blank"><img class="img-help2" src="img/telegram_circle.png"></a>
+					<a href="https://snailking.github.io/snailthrone" target="_blank"><img class="img-help2" src="img/snailthrone_circle.png"></a>
+				</div>
 			</div>
 		</div><br>
-		<div class="container road-background black-shadow" align="center">
+		<!-- INTRO -->
+		<div class="container" align="center">
+			<span id="introtext">?</span>
+		</div><br>
+		<div class="container info img-border" align="center">
+			<h3><b>SLUGROAD</b> is a Fomogame where you compete to drive the Lambo to <i>HYPERSPEED</i></h3>
 			<br>
-			<h1>23.48 ETH</h3><br>
-			<h5>Entering Hyperspeed in: </h4>
-			<h1>4:24:40</h2><br>
-			<h4>0x1234abcd holds the wheel!</h4>
-			<br><br><br><br><br><br><br><br><br><br>
+			<div class="row">
+				<div class="col-sm info2">
+					<h4>A) Pick one of three tracks</h4>
+					<h5>Each of them is on a different blockchain</h5>
+				</div>
+				<div class="col-sm info2">
+					<h4>B) Reach 1000 miles per hour</h4>
+					<h5>Start draining the pot of your favorite crypto</h5>
+				</div>
+			</div><br>
+			<h3>Hold the wheel for a full hour in Hyperspeed, <b>win the full pot</b></h3>
+		</div><br>
+		<!-- BEAUTIFUL SCROLLING LAMBO -->	
+		<div class="slide-in-left" align="center"> 
+			<img class="vibrate-1" src="img/lambo.png">
 		</div>
-		
+		<!-- HOW TO -->
+		<div class="container info img-border">
+			<h3><b>HOW IT WORKS</b></h3><br>
+			<div class="info2 img-border2">
+				<br><h5>- Purchase at least 200 Slugs, and become the Driver immediately</h5><br>
+				<h5>- Get dividends from your Slugs when other players buy Slugs</h5><br>
+				<h5>- For a second chance, "Skip Ahead" with your dividends to get even more Slugs at a lower price</h5><br>
+				<h5>- Need a <i>third</i> chance? THROW your Slugs at the windshield to hijack the Lambo instantly</h5><br>
+			</div>
+			<br><h3>ONCE THE LAMBO REACHES 1000 MPH, HYPERSPEED BEGINS</h3><br>
+			<div class="info2 img-border2">
+				<br><h5>- As the driver, drain some of the pot every second</h5><br>
+				<h5>- Jump out of the car to secure your gains, or hold tight for a full hour to win it all</h5><br>
+				<h5>- Not the driver? Get 200 Slugs or Throw them, and the driver gets nothing</h5><br>
+			</div>
+		</div><br>
+		<!-- TRACK SELECTION -->
+		<div class="container" align="center">
+			<h1 class="pulseperma">CHOOSE YOUR TRACK</h1><br>
+			<div class="row">
+				<div class="col-sm">
+					<a href="game_eth"><img src="img/ether.png" class="pulse" height="128px"></a><br>
+					<br><h3>ETH</h3>
+				</div>
+				<div class="col-sm">
+					<a href="game_poa"><img src="img/poa_ball.png" class="pulse" height="128px"></a><br>
+					<br><h3>POA</h3>
+				</div>
+				<div class="col-sm">
+					<a href="game_xdai"><img src="img/xdai_logo.png" class="pulse" height="128px"></a><br>
+					<br><h3>xDAI</h3>
+				</div>
+			</div>
+		</div>
 		<!-- JAVASCRIPT -->
-		<script src="slugroad.js"></script>				
+		<script src="landing.js"></script>				
 		<script>
 			initUpdate();
 		</script>		

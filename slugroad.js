@@ -172,7 +172,6 @@ var doc_maxSlug = document.getElementById('maxslug');
 var doc_actionState = document.getElementById('actionstate');
 var doc_etherDrained = document.getElementById('drained');
 var doc_nextLoop = document.getElementById('nextloop');
-var doc_pauseState = document.getElementById('pausestate');
 
 /* UTILITIES */
 
@@ -217,9 +216,13 @@ function dateLog(_blockNumber) {
 
 //Pause and unpause animation
 function pauseAnimation() {
-	//doc_pauseState.innerHTML = '<img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()">';
-	var _road = document.getElementById('ugh');
-	_road.style.backgroundimage = 'url("img/gif7.jpg")';
+	document.getElementById('roadwindow').className = 'container road-background-paused black-shadow img-border';
+	document.getElementById('pausestate').innerHTML = '<img class="img-help" src="img/play_icon.png" onclick="playAnimation()">';
+}
+
+function playAnimation() {
+	document.getElementById('roadwindow').className = 'container road-background black-shadow img-border';
+	document.getElementById('pausestate').innerHTML = '<img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()">';
 }
 	
 /* UPDATE */
