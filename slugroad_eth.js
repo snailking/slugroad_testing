@@ -52,9 +52,10 @@ var jump_modal = document.getElementById("jump_modal");
 var trade_modal = document.getElementById("trade_modal");
 var math_modal = document.getElementById("math_modal");
 var paythrone_modal = document.getElementById("paythrone_modal");
+var warp_modal = document.getElementById("warp_modal");
  
 // Array to close them all
-var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal];
+var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal, warp_modal];
 
 // Close modal on game info
 function CloseModal() {
@@ -334,7 +335,7 @@ function updateText(){
 		doc_gameState.innerHTML = 'Press "Time Warp" to start a new loop';
 		doc_hyperState.innerHTML = 'TIME WARP READY!';
 		doc_speed.innerHTML = 'Infinity';
-		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(time_modal)">TIME WARP</button><h5 class="black-shadow">Start a new Loop</h5>';
+		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(warp_modal)">TIME WARP</button><h5 class="black-shadow">Start a new Loop</h5>';
 	}
 }
 
