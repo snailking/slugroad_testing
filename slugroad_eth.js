@@ -336,9 +336,6 @@ function updateText(){
 		doc_speed.innerHTML = 'Infinity';
 		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(time_modal)">TIME WARP</button><h5 class="black-shadow">Start a new Loop</h5>';
 	}
-	
-	if(a_driver == no_driver){
-		
 }
 
 //Changes u_updateLog to true, manual choice in case event watching fails
