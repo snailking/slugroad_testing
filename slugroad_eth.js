@@ -217,12 +217,12 @@ function dateLog(_blockNumber) {
 
 //Pause and unpause animation
 function pauseAnimation() {
-	document.getElementById('roadwindow').className = 'container road-backgloop-paused black-shadow img-border';
+	document.getElementById('roadwindow').className = 'container road-background-paused black-shadow img-border';
 	document.getElementById('pausestate').innerHTML = '<img class="img-help" src="img/play_icon.png" onclick="playAnimation()">';
 }
 
 function playAnimation() {
-	document.getElementById('roadwindow').className = 'container road-backgloop black-shadow img-border';
+	document.getElementById('roadwindow').className = 'container road-background black-shadow img-border';
 	document.getElementById('pausestate').innerHTML = '<img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()">';
 }
 	
@@ -411,7 +411,7 @@ function updateLocalTimer(){
 	if(s_hyperState == 0){
 		l_speed = MAX_SPEED - (_timer / ACCEL_FACTOR);
 		if(l_speed < MIN_SPEED) { l_speed = MIN_SPEED };
-		var _miles = Math.floor(l_speed / 1000) + 1;
+		var _miles = Math.floor(l_speed / 1000);
 		var _decimiles = Math.floor(l_speed % 1000);
 		if(_decimiles < 100) { _decimiles = "0" + _decimiles }
 		if(_decimiles < 10) { _decimiles = "0" + _decimiles }
