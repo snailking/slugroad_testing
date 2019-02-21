@@ -168,11 +168,13 @@ var doc_playerMileAfter = document.getElementById('playermileafter');
 var doc_time200 = document.getElementById('time200');
 var doc_timeGetSlug = document.getElementById('timeGetSlug');
 var doc_trade6000Mile = document.getElementById('trade6000mile');
+var doc_getCost = document.getElementById('getCost');
 var doc_mileReward = document.getElementById('milereward');
 var doc_maxSlug = document.getElementById('maxslug');
 var doc_actionState = document.getElementById('actionstate');
 var doc_etherDrained = document.getElementById('drained');
 var doc_nextLoop = document.getElementById('nextloop');
+var doc_canTradeMile = document.getElementById('cantrademile');
 
 /* UTILITIES */
 
@@ -259,6 +261,7 @@ function mainUpdate(){
 	updateMaxSlug();
 	updateTimer();
 	updateLog();
+	canTradeMile();
 	updateText();
 	setTimeout(mainUpdate, 4000);
 }
@@ -286,6 +289,7 @@ function updateText(){
 	doc_playerMile.innerHTML = a_playerMile;
 	doc_playerMile2.innerHTML = a_playerMile;
 	doc_playerMileAfter.innerHTML = parseInt(a_playerMile % 6000);
+	doc_getCost.innerHTML = a_getCost;
 	doc_time200.innerHTML = parseFloat(a_getCost * 200).toFixed(4);
 	doc_trade6000Mile.innerHTML = a_trade6000;
 	doc_mileReward.innerHTML = a_mileReward;
@@ -423,8 +427,8 @@ function updateLocalTimer(){
 	if(s_hyperState == 1){
 		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0000001;
 		
-		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
-		doc_etherDrained.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
+		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(6) + ' ETH';
+		doc_etherDrained.innerHTML = parseFloat(l_etherDrained).toFixed(6);
 	}
 }
 
@@ -487,14 +491,14 @@ function updateEtherDrained(){
 //Current player balance
 function updatePlayerBalance(){
 	GetBalance(m_account, function(result) {
-		a_playerBalance = formatEthValue(web3.fromWei(result,'ether'));		
+		a_playerBalance = formatEthValue2(web3.fromWei(result,'ether'));		
 	});
 }
 
 //Current player divs
 function updatePlayerDiv(){
 	ComputeDiv(m_account, function(result) {
-		a_playerDiv = formatEthValue(web3.fromWei(result,'ether'));		
+		a_playerDiv = formatEthValue2(web3.fromWei(result,'ether'));		
 	});
 }
 
@@ -549,6 +553,15 @@ function updateMileReward(){
 	ComputeMileReward(parseInt(a_playerMile / 6000), function(result) {
 		a_mileReward = formatEthValue2(web3.fromWei(result,'ether'));
 	});
+}
+
+//Make sure player has enough miles to trade
+function canTradeMile(){
+	if(a_playerMile >= 6000){
+		doc_canTradeMile.innerHTML = '<button class="btn btn-lg btn-info" onclick="closeThenFunc(webTradeMile)">TRADE MILES</button>';
+	} else {
+		doc_canTradeMile.innerHTML = '<button class="btn btn-lg btn-info" onclick="CloseModal()">DRIVE MORE</button>';
+	}
 }
 
 /* LOCAL FIELD INPUT */
