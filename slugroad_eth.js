@@ -297,7 +297,9 @@ function updateText(){
 	doc_timeGetSlug.innerHTML = parseInt((a_playerDiv + a_playerBalance) / (a_getCost));
 	
 	if(s_hyperState == 0){
-		if(a_driver == m_account){
+		if(a_driver == no_driver){
+			doc_driverState.innerHTML = 'The Lambo is swerving!';
+		} else if(a_driver == m_account){
 			doc_driverState.innerHTML = 'YOU hold the wheel!';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(jump_modal)">JUMP OUT</button><h5 class="black-shadow">Drive to hyperspace</h5>';
 		} else {
@@ -308,31 +310,35 @@ function updateText(){
 		doc_hyperState.innerHTML = 'Entering Hyperspeed in:';
 		//doc_speed.innerHTML = a_speed;	
 	} else if (s_hyperState == 1) {
-		if(a_driver == m_account){
+		if(a_driver == no_driver){
+			doc_driverState.innerHTML = 'Driverless Hyperspeed!';
+			doc_gameState.innerHTML = 'Hijack the Lambo before it Time Warps on its own';
+		} else if(a_driver == m_account){
 			doc_driverState.innerHTML = 'YOU drain the pot!'; 
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(jump_modal)">JUMP OUT</button><h5 class="black-shadow">Secure your gains</h5>';
 		} else {
 			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' drains the pot!';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
-		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
-		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
+		//doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(6) + ' ETH';
+		doc_hyperState.innerHTML = 'HYPERSPEED! Time Warp in:';
 		doc_speed.innerHTML = "1000.000";
 	} else if (s_hyperState == 2) {
-		if(a_driver == m_account){
+		if(a_driver == no_driver){
+			doc_driverState.innerHTML = 'A driverless Lambo is ready to Time Warp!';
+		} else if(a_driver == m_account){
 			doc_driverState.innerHTML = 'YOU WON THE POT!';
 		} else {
 			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' WON THE POT!';
 		}
-		doc_gameState.innerHTML = 'Press "Time Jump" to start a new loop';
-		doc_hyperState.innerHTML = 'TIME JUMP READY!';
+		doc_gameState.innerHTML = 'Press "Time Warp" to start a new loop';
+		doc_hyperState.innerHTML = 'TIME WARP READY!';
 		doc_speed.innerHTML = 'Infinity';
-		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(time_modal)">TIME JUMP</button><h5 class="black-shadow">Start a new Loop</h5>';
+		doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(time_modal)">TIME WARP</button><h5 class="black-shadow">Start a new Loop</h5>';
 	}
 	
 	if(a_driver == no_driver){
-		doc_driverState.innerHTML = 'The Lambo is swerving!';
-	}
+		
 }
 
 //Changes u_updateLog to true, manual choice in case event watching fails
@@ -424,7 +430,7 @@ function updateLocalTimer(){
 	}
 
 	//ether drain calculation
-	if(s_hyperState == 1){
+	if(s_hyperState == 1 && a_driver != no_driver){
 		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0000001;
 		
 		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(6) + ' ETH';
@@ -609,8 +615,8 @@ function webJumpOut(){
 }
 
 //Time Jump
-function webTimeJump(){
-	TimeJump(function(){
+function webTimeWarp(){
+	TimeWarp(function(){
 	});
 }
 
