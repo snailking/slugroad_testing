@@ -311,7 +311,7 @@ function updateText(){
 			doc_driverState.innerHTML = formatEthAdr(a_driver) + ' drains the pot!';
 			doc_actionState.innerHTML = '<button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5>';
 		}
-		doc_gameState.innerHTML = 'Ether drained: ' + l_etherDrained + ' ETH';
+		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
 		doc_hyperState.innerHTML = 'HYPERSPEED! Time Jump in:';
 		doc_speed.innerHTML = "1000.000";
 	} else if (s_hyperState == 2) {
@@ -421,9 +421,10 @@ function updateLocalTimer(){
 
 	//ether drain calculation
 	if(s_hyperState == 1){
-		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0001;
+		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0000001;
 		
-		doc_etherDrained.innerHTML = parseFloat(l_etherDrained).toFixed(5);
+		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
+		doc_etherDrained.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(5) + ' ETH';
 	}
 }
 
