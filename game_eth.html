@@ -59,7 +59,7 @@
 					<img class="img-help" src="img/question_circle.png" onclick="showModal(car_1_modal)">
 				</div>
 			</div>		 
-			<h1><span id="roundpot">?</span> ETH</h3><br>
+			<h1><span id="loopChest">?</span> ETH</h3><br>
 			<div class="row">
 				<div class="col-sm">
 					<h5><span id="hyperstate">Entering Hyperspeed in:</span></h4>
@@ -156,7 +156,7 @@
 				</div>
 				<div class="col-sm">
 					<h4>Slug Pot</h5><br><br>
-					<h4><span id="slugpot">??.??</span> ETH</h5>
+					<h4><span id="slugBank">??.??</span> ETH</h5>
 				</div>
 				<div class="col-sm">
 					<h4>Throne Pot</h5><br><br>
@@ -386,7 +386,7 @@
 						<h5>Without a Driver, the pot carries over to the next Loop.</h5>
 						<br>
 						<h4 class="uppercase">Next Loop starts immediately</h5>
-						<h5>The RoundPot is refueled by the SlugPot, and the Lambo starts driving at 100 MPH.</h5>
+						<h5>The loopChest is refueled by the slugBank, and the Lambo starts driving at 100 MPH.</h5>
 						<h5>Your Slugs, your Miles and your Rewards carry over.</h5>
 						<br>
 						<h4><i>Note: whoever triggers the Time Jump gets to become the Driver for free!</i></h4>
@@ -419,8 +419,8 @@
 					</div>
 					<h3>SLUG</h3>
 					<div class="info2 padding img-border2">
-						<h5>The price of one Slug on a buy is: (0.000025 + (roundpot/10000)) / loop</h5>
-						<h5>While Skipping Ahead, the price of one Slug is: (0.000025 + (roundpot/10000)) / (round + 1)</h5>
+						<h5>The price of one Slug on a buy is: (0.000025 + (loopChest/10000)) / loop</h5>
+						<h5>While Skipping Ahead, the price of one Slug is: (0.000025 + (loopChest/10000)) / (round + 1)</h5>
 						<h5>Slugs entitle their owners to proportional dividends compared to the current number of Slugs alive.</h5>
 					</div>
 					<h3>MILES</h3>
@@ -431,8 +431,8 @@
 					<div class="info2 padding img-border2">
 						<h5>Each payable transaction is split as follows:</h5>
 						<h5>- 60% divs</h5>
-						<h5>- 20% slugPot (reserve for next Loops)</h5>
-						<h5>- 10% roundPot</h5>
+						<h5>- 20% slugBank (reserve for next Loops)</h5>
+						<h5>- 10% loopChest</h5>
 						<h5>- 10% thronePot</h5>
 					</div>
 					<div class="container" align="center">
@@ -457,7 +457,7 @@
 						<h4>On a new Loop, the Lambo starts driving at 100 MPH.</h4>
 						<h4>From that speed, it takes 7 days to reach Hyperspeed.</h4>
 						<h4>If the Lambo drives through Hyperspeed for a full hour, the Loop ends.</h4>
-						<h4>A new Loop starts, with half of the slugpot added to the roundpot.</h4>
+						<h4>A new Loop starts, with half of the slugBank added to the loopChest.</h4>
 					</div>
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
@@ -525,7 +525,7 @@
 					<div class="info2 padding img-border2">
 						<h4>The Driver earns Miles as he drives.</h4>
 						<h4>Once the Driver steps out of the car, he can trade these Miles for ETH.</h4>
-						<h4>If the Driver enters Hyperspeed, he starts draining the roundpot.</h4>
+						<h4>If the Driver enters Hyperspeed, he starts draining the loopChest.</h4>
 						<h4>Jumping Out will secure his gains, but renounce his spot.</h4>
 						<h4>Without a Driver, the Lambo swerves endlessly until a new hijack happens.</h4>
 					</div>
@@ -542,7 +542,7 @@
 					<h1 class="black-shadow">SLUGS</h2><br>
 					<div class="info2 padding img-border2">
 						<h4>Buy Slugs to earn divs on every Slug buy.</h4>
-						<h5>The price of Slugs scales with the roundpot, then divided by the Loop number.</h4>
+						<h5>The price of Slugs scales with the loopChest, then divided by the Loop number.</h4>
 						<h5>The higher the Loop, the lowest the price.</h4>
 						<br>
 						<h4>Skip Ahead to get Slugs at a lower price.</h4>
@@ -582,7 +582,7 @@
 					<div class="info2 padding img-border2">
 						<h4>Earn miles as you drive.</h4>
 						<h5>Once you're not the Driver anymore, you can trade your miles.</h4>
-						<h5>For every 6000 miles you accumulate, get 1% of the roundpot.</h4>
+						<h5>For every 6000 miles you accumulate, get 1% of the loopChest.</h4>
 						<br>
 						<h4>You can trade more than 6000 miles at once. Your leftover miles will remain.</h4>
 					</div>
@@ -616,7 +616,7 @@
 					<div class="info2 padding img-border2">
 						<h5>Slugs Alive: total number of Slugs bought and currently alive</h5>
 						<h5>Contract Balance: total number of ether in contract</h5>
-						<h5>Slug Pot: reserve pot to sustain the roundpot. On a new Loop, half of it feeds the roundpot.</h5>
+						<h5>Slug Pot: reserve pot to sustain the loopChest. On a new Loop, half of it feeds the loopChest.</h5>
 						<h5>Throne Pot: this pot can be sent to the SnailThrone at any time, rewarding SnailThrone players with divs</h5>
 					</div>
 					<div class="container" align="center">

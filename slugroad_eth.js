@@ -113,7 +113,7 @@ var a_speed;
 var a_contractBalance;
 var a_loop = 0;
 var a_loopPot;
-var a_slugPot;
+var a_slugBank;
 var a_thronePot;
 var a_driver = "";
 var a_driverMileOld = 0;
@@ -154,7 +154,7 @@ var doc_timer = document.getElementById('timer');
 var doc_speed = document.getElementById('speed');
 var doc_driverState = document.getElementById('driverstate');
 var doc_gameState = document.getElementById('gamestate');
-var doc_slugPot = document.getElementById('slugpot');
+var doc_slugBank = document.getElementById('slugBank');
 var doc_thronePot = document.getElementById('thronepot');
 var doc_buyCost = document.getElementById('buyCost');
 var doc_buy200 = document.getElementById('buy200');
@@ -238,7 +238,7 @@ function mainUpdate(){
 	updateEthAccount();
 	updateContractBalance();
 	updateloop();
-	updateSlugPot();
+	updateslugBank();
 	updateloopPot();
 	updateThronePot();
 	updateSpeed();
@@ -276,7 +276,7 @@ function updateText(){
 	doc_loop.innerHTML = a_loop;	
 	doc_nextLoop.innerHTML = parseInt(a_loop + 1);
 	doc_loopPot.innerHTML = a_loopPot;
-	doc_slugPot.innerHTML = a_slugPot;
+	doc_slugBank.innerHTML = a_slugBank;
 	doc_thronePot.innerHTML = a_thronePot;
 	doc_buyCost.innerHTML = a_buyCost;
 	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(4);
@@ -428,9 +428,9 @@ function updateLocalTimer(){
 }
 
 //Current slug pot
-function updateSlugPot(){
-	slugPot(function(result) {
-		a_slugPot = formatEthValue(web3.fromWei(result,'ether'));
+function updateslugBank(){
+	slugBank(function(result) {
+		a_slugBank = formatEthValue(web3.fromWei(result,'ether'));
 	});
 }
 
@@ -1525,7 +1525,7 @@ function runLog(){
 							} else if(result[i].event == "PaidThrone"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " paid tribute to the SnailThrone! " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH has been sent.";										
 							} else if(result[i].event == "BoostedPot"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH donation to the SlugPot.";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH donation to the slugBank.";
 							}
 							logboxscroll.scrollTop = logboxscroll.scrollHeight;
 						}
@@ -1681,7 +1681,7 @@ boostedpotEvent.watch(function(error, result){
 		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH donation to the SlugPot.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH donation to the slugBank.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
