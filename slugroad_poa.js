@@ -1429,8 +1429,8 @@ function checkHash(txhash, eventname) {
 	var i = 0;
 	var _name = false;
 	do {
-		if(store_hash[i] == eventname) {
-			if(store_event[i] == txhash) {
+		if(store_hash[i] == txhash) {
+			if(store_event[i] == eventname) {
 				return 0;
 			}
 		}
