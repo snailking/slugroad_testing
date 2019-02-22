@@ -1407,7 +1407,7 @@ function checkHash(txarray, txhash, eventname) {
 			}
 			j++;
 		}
-		while(j < txarray.length &&);
+		while(j < txarray.length);
 	}
 	//Add new tx hash and new event name
 	txarray.push(txhash);
