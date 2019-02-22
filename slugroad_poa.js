@@ -1384,66 +1384,40 @@ function starter(callback){
 
 /* EVENT WATCH */
 
-//Store transaction hash for each event, and check before executing result, as web3 events fire twice
+//Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice
 var storetxhash = [];
+var storeeventname = [];
 
 //Check equivalency
-function checkHash(txarray, txhash) {
+function checkHash(txarray, txhash, eventname) {
 	var i = 0;
+	var _hash = 0;
 	do {
 		if(txarray[i] == txhash) {
-			return 0;
+			_hash = 1;
 		}
 		i++;
 	}
-	while(i < txarray.length);
-	//Add new tx hash
+	while(i < txarray.length && _hash != 1);
+	if(_hash == 1){
+		var j = 0;
+		do {
+			if(storeeventname[j] == eventname) {
+				return 0;
+			}
+			j++;
+		}
+		while(j < storeeventanme.length);
+	}
+	//Add new tx hash and new event name
 	txarray.push(txhash);
+	storeeventname.push(eventname);
 	//Remove first tx hash if there's more than 16 hashes saved
-	if(txarray.length > 16) {
+	if(txarray.length > 10) {
 		txarray.shift();
 	}
-}
-
-//Compute Leaderboard
-
-function computeLeaderboard() {
-	var lowest = d_leaderboard[0].egg;
-	var position = 0; 
-	
-	//Check lowest leader
-	var i = 0;
-	for(i = 0; i < 5; i++) {
-		if(d_leaderboard[i].egg < lowest) {
-			lowest = d_leaderboard[i].egg;
-			position = i;
-		}
-	}
-	
-	//Check if new player is already on leaderboard, then check if new player can replace lowest
-	var notLeader = true;
-	for(k = 0; k < 5; k++) {
-		if(e_challenger.address == d_leaderboard[k].address) {
-			d_leaderboard[k].address = e_challenger.address;
-			d_leaderboard[k].egg = e_challenger.egg;
-			notLeader = false;
-		}
-	}
-
-	var newEntry = false;
-	if(notLeader == true && e_challenger.egg > lowest) {
-		d_leaderboard[position].address = e_challenger.address;
-		d_leaderboard[position].egg = e_challenger.egg;
-		newEntry = true;
-	}
-}
-
-// Wipe Leaderboard (run this after a "won loop" event on loop end
-
-function wipeLeaderboard(){
-	for(i = 0; i < 5; i++) {
-		d_leaderboard[i].address = "0x0000000022223333444455556666777788889999";
-		d_leaderboard[i].egg = 0;
+	if(storeeventname.length > 10) {
+		storeeventname.shift();
 	}
 }
 
@@ -1451,8 +1425,6 @@ function wipeLeaderboard(){
 
 var logboxscroll = document.getElementById('logboxscroll');
 var eventlogdoc = document.getElementById("eventlog");
-
-var e_challenger = { address: "", egg: 0 };
 
 function runLog(){
 	ranLog = true;
@@ -1464,7 +1436,7 @@ function runLog(){
 				p_keepUpdating = true;
 				for(i = 0; i < 40; i++){ //loop through only 40 events at most
 					if(i < result.length){ //make sure there's enough events
-						if(checkHash(storetxhash, result[i].transactionHash) != 0) {
+						if(checkHash(storetxhash, result[i].transactionHash, result[i].event) != 0) {
 							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
 							dateLog(result[i].blockNumber);
 							if(result[i].event == "WithdrewBalance"){
