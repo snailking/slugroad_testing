@@ -1383,7 +1383,7 @@ function starter(callback){
 }
 
 /* EVENT WATCH */
-
+/*
 //Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice
 var storetxhash = [];
 var storeeventname = [];
@@ -1393,11 +1393,11 @@ function checkHash(txarray, txhash, eventname) {
 	var i = 0;
 	var _name = 0;
 	do {
-			if(storeeventname[i] == eventname) {
-				_name = 1;
-			}
-			i++;
+		if(storeeventname[i] == eventname) {
+			_name = 1;
 		}
+		i++;
+	}
 	while(i < storeeventname.length);
 	if(_name == 1) {
 		var j = 0;
@@ -1420,7 +1420,38 @@ function checkHash(txarray, txhash, eventname) {
 		storeeventname.shift();
 	}
 }
+*/
+//Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice (metamask?)
+var store_hash = [];
+var store_event = [];
 
+function checkHash(txhash, eventname) {
+	var i = 0;
+	var _name = false;
+	do {
+		if(store_hash[i] == eventname) {
+			if(store_event[i] == txhash) {
+				return 0;
+			}
+		}
+		i++;
+	}
+	while(i < store_event.length);
+	
+	//Add new tx hash and event name
+	store_hash.push(txhash);
+	store_event.push(eventname);
+	
+	//Remove first entry if there's more than 8 entries saved
+	if(store_hash.length > 8){
+		store_hash.shift();
+	}
+	if(store_event.length > 8){
+		store_event.shift();
+	}
+}
+
+				
 /* EVENTS */
 
 var logboxscroll = document.getElementById('logboxscroll');
@@ -1436,7 +1467,7 @@ function runLog(){
 				p_keepUpdating = true;
 				for(i = 0; i < 40; i++){ //loop through only 40 events at most
 					if(i < result.length){ //make sure there's enough events
-						if(checkHash(storetxhash, result[i].transactionHash, result[i].event) != 0) {
+						if(checkHash(result[i].transactionHash, result[i].event) != 0) {
 							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
 							dateLog(result[i].blockNumber);
 							if(result[i].event == "WithdrewBalance"){
@@ -1482,7 +1513,7 @@ var withdrewbalanceEvent = myContract.WithdrewBalance();
 withdrewbalanceEvent.watch(function(error, result){
     if(!error){
 		//////////////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " withdrew " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA to their wallet.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1494,7 +1525,7 @@ var boughtslugEvent = myContract.BoughtSlug();
 boughtslugEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " bought " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1506,7 +1537,7 @@ var skippedaheadEvent = myContract.SkippedAhead();
 skippedaheadEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " skipped in time, and got " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1518,7 +1549,7 @@ var tradedmileEvent = myContract.TradedMile();
 tradedmileEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " traded " + parseInt((result.args.mile) * 6000) + " miles. Their reward: " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1530,7 +1561,7 @@ var becamedriverEvent = myContract.BecameDriver();
 becamedriverEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " became the driver. Onwards to hyperspeed!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1542,7 +1573,7 @@ var tookwheelEvent = myContract.TookWheel();
 tookwheelEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopChest + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1554,7 +1585,7 @@ var threwslugEvent = myContract.ThrewSlug();
 tookwheelEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " threw slugs at the windshield! The car swerves...";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1566,7 +1597,7 @@ var jumpedoutEvent = myContract.JumpedOut();
 jumpedoutEvent.watch(function(error, result){
     if(!error){
 		////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA on their way out!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1578,7 +1609,7 @@ var timejumpedEvent = myContract.TimeWarped();
 timejumpedEvent.watch(function(error, result){
     if(!error){
 		//////////////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result.args.loop - 1) + " is over. " + formatEthAdr(result.args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA. Loop " + result.args.loop + " starts!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1590,7 +1621,7 @@ var newloopEvent = myContract.NewLoop();
 newloopEvent.watch(function(error, result){
     if(!error){
 		//////////////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME PARADOX! Loop " + parseInt(result.args.loop - 1) + " ends without a driver in car. Begin Loop " + result.args.loop + "...";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
@@ -1602,7 +1633,7 @@ var boostedpotEvent = myContract.BoostedPot();
 boostedpotEvent.watch(function(error, result){
     if(!error){
 		//////////////////console.log(result);
-		if(checkHash(storetxhash, result.transactionHash, result.event) != 0) {
+		if(checkHash(result.transactionHash, result.event) != 0) {
 			date24();
 			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA donation to the slugBank.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
