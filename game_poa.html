@@ -53,13 +53,13 @@
 					<span id="pausestate"><img class="img-help" src="img/pause_icon.png" onclick="pauseAnimation()"></span>
 				</div>
 				<div class="col-sm">
-					<h3 style="display: inline-block;">LOOP <span id="loop">1</span> - Ethereum Track</h3>
+					<h3 style="display: inline-block;">LOOP <span id="loop">1</span> - POA Track</h3>
 				</div>
 				<div class="col-sm-2" align="right">
 					<img class="img-help" src="img/question_circle.png" onclick="showModal(car_1_modal)">
 				</div>
 			</div>		 
-			<h1><span id="loopChest">?</span> ETH</h3><br>
+			<h1><span id="loopChest">?</span> POA</h3><br>
 			<div class="row">
 				<div class="col-sm">
 					<h5><span id="hyperstate">Entering Hyperspeed in:</span></h4>
@@ -96,12 +96,12 @@
 				<div class="row">
 					<div class="col-sm">
 						<button class="btn btn-lg btn-info" onclick="showModal(buy_modal)">BUY SLUGS</button>
-						<h5 class="black-shadow">200 slugs for <span id="buy200">?.???</span> ETH</h5>
+						<h5 class="black-shadow">200 slugs for <span id="buy200">?.???</span> POA</h5>
 						<br>
 					</div>
 					<div class="col-sm">
 						<button class="btn btn-lg btn-info" onclick="showModal(skip_modal)">SKIP AHEAD</button>
-						<h5 class="black-shadow">200 slugs for <span id="time200">?.???</span> ETH</h5>
+						<h5 class="black-shadow">200 slugs for <span id="time200">?.???</span> POA</h5>
 						<br>
 					</div>
 					<div class="col-sm">
@@ -110,12 +110,12 @@
 					</div>
 					<div class="col-sm">
 						<button class="btn btn-lg btn-info" onclick="showModal(trade_modal)">TRADE MILES</button>
-						<h5 class="black-shadow">For every 6000 miles, get <span id="trade6000mile">?.???</span> ETH</h5>
+						<h5 class="black-shadow">For every 6000 miles, get <span id="trade6000mile">?.???</span> POA</h5>
 						<br>
 					</div>
 					<div class="col-sm">
 						<button class="btn btn-lg btn-info" onclick="webWithdrawBalance()">WITHDRAW</button>
-						<h5 class="black-shadow">Withdraw all Ether to your wallet</h5>
+						<h5 class="black-shadow">Withdraw all POA to your wallet</h5>
 						<br>
 					</div>
 				</div>
@@ -137,14 +137,7 @@
 		</div><br>
 		<!-- STATS -->
 		<div class="container img-border info">
-			<div class="row">
-				<div class="col-sm">
-					<h3 style="display: inline-block;">STATS</h3> <img class="img-help" src="img/question_circle.png" onclick="showModal(stats_modal)">
-				</div>
-				<div class="col-sm" align="right">
-					<button class="btn btn-info" onclick="showModal(paythrone_modal)">Send Tribute</button>
-				</div>
-			</div>
+			<h3 style="display: inline-block;">STATS</h3> <img class="img-help" src="img/question_circle.png" onclick="showModal(stats_modal)">
 			<div class="row img-border2 info2" align="center">
 				<div class="col-sm">
 					<h4>Slugs Alive</h5><br><br>
@@ -152,22 +145,14 @@
 				</div>
 				<div class="col-sm">
 					<h4>Contract Balance</h5><br><br>
-					<h4><span id="contractbalance">??.??</span> ETH</h5>
+					<h4><span id="contractbalance">??.??</span> POA</h5>
 				</div>
 				<div class="col-sm">
 					<h4>Slug Bank</h5><br><br>
-					<h4><span id="slugBank">??.??</span> ETH</h5>
-				</div>
-				<div class="col-sm">
-					<h4>Throne Pot</h5><br><br>
-					<h4><span id="thronepot">??.??</span> ETH</h5>
+					<h4><span id="slugBank">??.??</span> POA</h5>
 				</div>
 			</div>
 		</div><br>
-		<!-- SNAILTHRONE -->
-		<div class="container pulse" align="center">
-			<h1><a href="https://snailking.github.io/snailthrone">>>TRY OUT SNAILTHRONE<<</a></h1>
-		</div>
 		<!-- BUY MODAL -->
 		<div id="buy_modal" class="modal">
 			<div class="info2 modal-content">
@@ -176,10 +161,10 @@
 					<div class="info padding img-border2">
 						<div class="row">
 							<div class="col-sm">
-								<h5>Cost per slug: <span id="buyCost">?</span> ETH</h5>
+								<h5>Cost per slug: <span id="buyCost">?</span> POA</h5>
 							</div>
 							<div class="col-sm">
-								<h5>Spend: <input type="text" id="fieldBuy" value="0.1" size="3"> ETH</h5>
+								<h5>Spend: <input type="text" id="fieldBuy" value="0.1" size="3"> POA</h5>
 							</div>
 							<div class="col-sm">
 								<h5>You will get: <span id="fieldBuySlug">200</span> Slugs</h5>
@@ -203,10 +188,10 @@
 					<div class="info padding img-border2">
 						<div class="row">
 							<div class="col-sm">
-								<h5>Cost per slug: <span id="getCost">?</span> ETH</h5>
+								<h5>Cost per slug: <span id="getCost">?</span> POA</h5>
 							</div>
 							<div class="col-sm">
-								<h5>You have: <span id="playerreward2">?</span> ETH</h5>
+								<h5>You have: <span id="playerreward2">?</span> POA</h5>
 							</div>
 							<div class="col-sm">
 								<h5>You will get: <span id="timeGetSlug">?</span> Slugs</h5>
@@ -246,7 +231,7 @@
 					<div class="info padding img-border2">
 						<h5>Jump out of the window to secure your gains!</h5>
 						<br>
-						<h5>You have currently drained <span id="drained">?</span> ETH</h5>
+						<h5>You have currently drained <span id="drained">?</span> POA</h5>
 					</div>
 					<div class="container" align="center">
 						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webJumpOut)">JUMP OUT</button>
@@ -277,7 +262,7 @@
 				<div class="img-border" align="center">
 					<h1 class="black-shadow">TRADE MILES</h2><br>
 					<div class="info padding img-border2">
-						<h5>You will get <span id="milereward">0.000</span> ETH for your <span id="playermile2">6464</span> miles.
+						<h5>You will get <span id="milereward">0.000</span> POA for your <span id="playermile2">6464</span> miles.
 						<br>
 						<h5>Miles remaining after trade: <span id="playermileafter">464</span></h5>
 					</div>
@@ -294,14 +279,14 @@
 				<div class="img-border">
 					<div class="row">
 						<div class="col-sm">
-							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+							<h1 class="black-shadow">DRIVE LAMBO, WIN POA</h2><br>
 						</div>
 						<div class="col-sm" align="right">
 							<h3 style="display: inline-block;">1/4</h3> <img class="img-dark" src="img/arrow_left.png"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_2_modal)">
 						</div>
 					</div>
 					<div class="info2 padding img-border2">
-						<h4 class="uppercase">Buy Slugs with ETH.</h4>
+						<h4 class="uppercase">Buy Slugs with POA.</h4>
 						<h5>Your Slugs give you divs for every buy after yours.</h5>
 						<br>
 						<h4 class="uppercase">Skip Ahead to get even more Slugs.</h4>
@@ -318,7 +303,7 @@
 				<div class="img-border">
 					<div class="row">
 						<div class="col-sm">
-							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+							<h1 class="black-shadow">DRIVE LAMBO, WIN POA</h2><br>
 						</div>
 						<div class="col-sm" align="right">
 							<h3 style="display: inline-block;">2/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_1_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_3_modal)">
@@ -331,7 +316,7 @@
 						<br>
 						<h4 class="uppercase">As the driver, hold the wheel</h4>
 						<h5>The Lambo accelerates progressively.</h4>
-						<h5>The Driver earns miles he can trade for ETH (once he's not the driver anymore).</h5>
+						<h5>The Driver earns miles he can trade for POA (once he's not the driver anymore).</h5>
 					</div>
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
@@ -344,7 +329,7 @@
 				<div class="img-border">
 					<div class="row">
 						<div class="col-sm">
-							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+							<h1 class="black-shadow">DRIVE LAMBO, WIN POA</h2><br>
 						</div>
 						<div class="col-sm" align="right">
 							<h3 style="display: inline-block;">3/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_2_modal)"><img class="img-help2" src="img/arrow_right.png" onclick="closeThenShowModal(help_4_modal)">
@@ -360,7 +345,7 @@
 						<h5>If another player hijacks the Lambo, the Driver gets nothing.</h5>
 						<br>
 						<h4 class="uppercase">Jump Out to secure your gains</h5>
-						<h5>The Driver can Jump Out before Hyperspeed ends, and get the ETH currently drained.</h5>
+						<h5>The Driver can Jump Out before Hyperspeed ends, and get the POA currently drained.</h5>
 						<h5>After Jumping Out, the Lambo swerves without a driver.</h5>
 					</div>
 					<div class="container" align="center">
@@ -374,7 +359,7 @@
 				<div class="img-border">
 					<div class="row">
 						<div class="col-sm">
-							<h1 class="black-shadow">DRIVE LAMBO, WIN ETH</h2><br>
+							<h1 class="black-shadow">DRIVE LAMBO, WIN POA</h2><br>
 						</div>
 						<div class="col-sm" align="right">
 							<h3 style="display: inline-block;">4/4</h3> <img class="img-help2" src="img/arrow_left.png" onclick="closeThenShowModal(help_3_modal)"><img class="img-dark" src="img/arrow_right.png">
@@ -419,8 +404,8 @@
 					</div>
 					<h3>SLUG</h3>
 					<div class="info2 padding img-border2">
-						<h5>The price of one Slug on a buy is: (0.000025 + (loopChest/10000)) / loop</h5>
-						<h5>While Skipping Ahead, the price of one Slug is: (0.000025 + (loopChest/10000)) / (loop + 1)</h5>
+						<h5>The price of one Slug on a buy is: (0.025 + (loopChest/100000)) / loop</h5>
+						<h5>While Skipping Ahead, the price of one Slug is: (0.025 + (loopChest/100000)) / (loop + 1)</h5>
 						<h5>Slugs entitle their owners to proportional dividends compared to the current number of Slugs alive.</h5>
 					</div>
 					<h3>MILES</h3>
@@ -430,10 +415,9 @@
 					<h3>POT SPLIT</h3>
 					<div class="info2 padding img-border2">
 						<h5>Each payable transaction is split as follows:</h5>
-						<h5>- 60% divs</h5>
+						<h5>- 20% divs</h5>
 						<h5>- 20% slugBank (reserve for next Loops)</h5>
-						<h5>- 10% loopChest</h5>
-						<h5>- 10% thronePot</h5>
+						<h5>- 60% loopChest</h5>
 					</div>
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
@@ -524,7 +508,7 @@
 					</div>
 					<div class="info2 padding img-border2">
 						<h4>The Driver earns Miles as he drives.</h4>
-						<h4>Once the Driver steps out of the car, he can trade these Miles for ETH.</h4>
+						<h4>Once the Driver steps out of the car, he can trade these Miles for POA.</h4>
 						<h4>If the Driver enters Hyperspeed, he starts draining the loopChest.</h4>
 						<h4>Jumping Out will secure his gains, but renounce his spot.</h4>
 						<h4>Without a Driver, the Lambo swerves endlessly until a new hijack happens.</h4>
@@ -546,7 +530,7 @@
 						<h5>The higher the Loop, the lowest the price.</h4>
 						<br>
 						<h4>Skip Ahead to get Slugs at a lower price.</h4>
-						<h5>With your ETH rewards, you can buy Slugs at the price they would cost in the next Loop</h4>
+						<h5>With your POA rewards, you can buy Slugs at the price they would cost in the next Loop</h4>
 						<h5>Skipping Ahead is always cheaper than Buying!</h4>
 						<br>
 						<h4>Get at least 200 Slugs in one Buy or Skip, and you become the Driver.</h4>
@@ -563,7 +547,7 @@
 				<div class="img-border">
 					<h1 class="black-shadow">REWARDS</h2><br>
 					<div class="info2 padding img-border2">
-						<h4>All your ETH rewards from the game end up here.</h4>
+						<h4>All your POA rewards from the game end up here.</h4>
 						<h5>Consume them to Skip Ahead and get more Slugs at an advantageous rate.</h4>
 						<h5>You can also withdraw your rewards at any time back to your wallet.</h4>
 						<br>
@@ -617,47 +601,9 @@
 						<h5>Slugs Alive: total number of Slugs bought and currently alive</h5>
 						<h5>Contract Balance: total number of ether in contract</h5>
 						<h5>Slug Pot: reserve pot to sustain the loopChest. On a new Loop, half of it feeds the loopChest.</h5>
-						<h5>Throne Pot: this pot can be sent to the SnailThrone at any time, rewarding SnailThrone players with divs</h5>
 					</div>
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
-						<button type="button" class="btn btn-info" onclick="closeThenShowModal(snailthrone_modal)">SnailThrone?</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- SNAILTHRONE MODAL -->
-		<div id="snailthrone_modal" class="modal">
-			<div class="info modal-content">
-				<div class="img-border">
-					<h1 class="black-shadow">SNAILTHRONE</h2><br>
-					<div class="info2 padding img-border2" align="center">
-						<h4>The SnailThrone is a mastergame rewarding its players with ETH from other Snail games.</h5>
-						<h5>Anyone can join the SnailThrone.</h5>
-						<br>
-						<h3 class="uppercase">Check out the SnailThrone</h3>
-						<a href="https://snailking.github.io/snailthrone" target="_blank"><img class="img-help2" height="96px" src="img/snailthrone_circle.png"></a>
-					</div>
-					<div class="container" align="center">
-						<button type="button" class="btn btn-info" onclick="CloseModal()">No thanks, I'll pass on getting even more divs</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- PAY THRONE MODAL -->
-		<div id="paythrone_modal" class="modal">
-			<div class="info modal-content">
-				<div class="img-border">
-					<h1 class="black-shadow">SEND TRIBUTE</h2><br>
-					<div class="info2 padding img-border2" align="center">
-						<h4>Send the current ThronePot to the SnailThrone.</h5>
-						<h5>SnailThrone holders will be rewarded in the form of dividends.</h5>
-						<br>
-						<h4>Sending the ThronePot is an action available to everyone, and doesn't affect your personal rewards.</h4>
-					</div>
-					<div class="container" align="center">
-						<button type="button" class="btn btn-info" onclick="closeThenFunc(webPayThrone)">SEND TRIBUTE</button>
-						<a href="https://snailking.github.io/snailthrone"><button type="button" class="btn btn-info">GO TO SNAILTHRONE</button></a>
 					</div>
 				</div>
 			</div>
