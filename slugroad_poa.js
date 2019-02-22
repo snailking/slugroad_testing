@@ -425,7 +425,7 @@ function updateLocalTimer(){
 	if(s_hyperState == 1 && a_driver != no_driver){
 		l_etherDrained = (3600000 - _timer) * a_loopChest * 0.0000001;
 		
-		doc_gameState.innerHTML = 'Ether drained: ' + parseFloat(l_etherDrained).toFixed(6) + ' ETH';
+		doc_gameState.innerHTML = 'Poa drained: ' + parseFloat(l_etherDrained).toFixed(6) + ' POA';
 		doc_etherDrained.innerHTML = parseFloat(l_etherDrained).toFixed(6);
 	}
 }
