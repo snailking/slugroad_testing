@@ -1468,27 +1468,27 @@ function runLog(){
 							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
 							dateLog(result[i].blockNumber);
 							if(result[i].event == "WithdrewBalance"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " withdrew " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH to their wallet.";								
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " withdrew " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA to their wallet.";								
 							} else if(result[i].event == "BoughtSlug"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " bought " + result[i].args.slug + " slugs for " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH.";		
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " bought " + result[i].args.slug + " slugs for " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA.";		
 							} else if(result[i].event == "SkippedAhead"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " skipped in time, and got " + result[i].args.slug + " slugs for " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH!";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " skipped in time, and got " + result[i].args.slug + " slugs for " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA!";
 							} else if(result[i].event == "TradedMile"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " traded " + parseInt((result[i].args.mile) * 6000) + " miles. Their reward: " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH.";			
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " traded " + parseInt((result[i].args.mile) * 6000) + " miles. Their reward: " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA.";			
 							} else if(result[i].event == "BecameDriver"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " became the driver. Onwards to hyperspeed!";
 							} else if(result[i].event == "TookWheel"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " took the wheel! They're next in line to win " + a_loopChest + " ETH.";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " took the wheel! They're next in line to win " + a_loopChest + " POA.";
 							} else if(result[i].event == "ThrewSlug"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " threw slugs at the windshield! The car swerves...";
 							} else if(result[i].event == "JumpedOut"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH on their way out!";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA on their way out!";
 							} else if(result[i].event == "TimeWarped"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result[i].args.loop - 1) + " is over. " + formatEthAdr(result[i].args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH. Loop " + result[i].args.loop + " starts!";							
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result[i].args.loop - 1) + " is over. " + formatEthAdr(result[i].args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA. Loop " + result[i].args.loop + " starts!";							
 							} else if(result[i].event == "NewLoop"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME PARADOX! Loop " + parseInt(result[i].args.loop - 1) + " ends without a driver in car. Begin Loop " + result[i].args.loop + "...";																	
 							} else if(result[i].event == "BoostedPot"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " ETH donation to the slugBank.";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result[i].args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result[i].args.eth,'ether')) + " POA donation to the slugBank.";
 							}
 							logboxscroll.scrollTop = logboxscroll.scrollHeight;
 						}
@@ -1512,7 +1512,7 @@ withdrewbalanceEvent.watch(function(error, result){
 		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " withdrew " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH to their wallet.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " withdrew " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA to their wallet.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1524,7 +1524,7 @@ boughtslugEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " bought " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " bought " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1536,7 +1536,7 @@ skippedaheadEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " skipped in time, and got " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH!";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " skipped in time, and got " + result.args.slug + " slugs for " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1548,7 +1548,7 @@ tradedmileEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " traded " + parseInt((result.args.mile) * 6000) + " miles. Their reward: " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " traded " + parseInt((result.args.mile) * 6000) + " miles. Their reward: " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1572,7 +1572,7 @@ tookwheelEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopChest + " ETH.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " took the wheel! They're next in line to win " + a_loopChest + " POA.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1596,7 +1596,7 @@ jumpedoutEvent.watch(function(error, result){
 		//////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH on their way out!";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " jumped out of the car, snatching " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA on their way out!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1608,7 +1608,7 @@ timejumpedEvent.watch(function(error, result){
 		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result.args.loop - 1) + " is over. " + formatEthAdr(result.args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH. Loop " + result.args.loop + " starts!";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] TIME WARP! Loop " + parseInt(result.args.loop - 1) + " is over. " + formatEthAdr(result.args.player) + " drove the car to the future and won " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA. Loop " + result.args.loop + " starts!";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
@@ -1632,7 +1632,7 @@ boostedpotEvent.watch(function(error, result){
 		////////////////console.log(result);
 		if(checkHash(storetxhash, result.transactionHash) != 0) {
 			date24();
-			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " ETH donation to the slugBank.";
+			eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatEthAdr(result.args.player) + " makes a generous " + formatEthValue2(web3.fromWei(result.args.eth,'ether')) + " POA donation to the slugBank.";
 			logboxscroll.scrollTop = logboxscroll.scrollHeight;
 		}
 	}
