@@ -279,7 +279,7 @@ function updateText(){
 	doc_contractBalance.innerHTML = a_contractBalance;
 	doc_loop.innerHTML = a_loop;	
 	doc_nextLoop.innerHTML = parseInt(a_loop + 1);
-	doc_loopChest.innerHTML = a_loopChest;
+	doc_loopChest.innerHTML = formatEthValue(a_loopChest);
 	doc_slugBank.innerHTML = a_slugBank;
 	doc_thronePot.innerHTML = a_thronePot;
 	doc_buyCost.innerHTML = parseFloat(a_buyCost).toFixed(8);
@@ -446,7 +446,7 @@ function updateslugBank(){
 //Current loopChest
 function updateloopChest(){
 	loopChest(function(result) {
-		a_loopChest = formatEthValue(web3.fromWei(result,'ether'));
+		a_loopChest = web3.fromWei(result,'ether');
 	});
 }
 
