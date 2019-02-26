@@ -572,7 +572,7 @@ function canTradeMile(){
 
 //Set buy field to hijack requirement
 function setDriveBuy(){
-	document.getElementById('fieldBuy').value = parseFloat(parseFloat(a_buyCost * 200).toFixed(4) + 0.0001);
+	document.getElementById('fieldBuy').value = parseFloat(a_buyCost * 200 + 0.0001).toFixed(4);
 }
 
 //Player input on buy
