@@ -282,16 +282,16 @@ function updateText(){
 	doc_loopChest.innerHTML = a_loopChest;
 	doc_slugBank.innerHTML = a_slugBank;
 	doc_thronePot.innerHTML = a_thronePot;
-	doc_buyCost.innerHTML = a_buyCost;
-	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(4);
+	doc_buyCost.innerHTML = parseFloat(a_buyCost).toFixed(8);
+	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(5);
 	doc_playerSlug.innerHTML = a_playerSlug;
-	doc_playerReward.innerHTML = a_playerBalance + a_playerDiv;
-	doc_playerReward2.innerHTML = a_playerBalance + a_playerDiv;
+	doc_playerReward.innerHTML = parseFloat(a_playerBalance + a_playerDiv).toFixed(6);
+	doc_playerReward2.innerHTML = parseFloat(a_playerBalance + a_playerDiv).toFixed(6);
 	doc_playerMile.innerHTML = a_playerMile;
 	doc_playerMile2.innerHTML = a_playerMile;
 	doc_playerMileAfter.innerHTML = parseInt(a_playerMile % 6000);
-	doc_getCost.innerHTML = a_getCost;
-	doc_time200.innerHTML = parseFloat(a_getCost * 200).toFixed(4);
+	doc_getCost.innerHTML = parseFloat(a_getCost).toFixed(8);
+	doc_time200.innerHTML = parseFloat(a_getCost * 200).toFixed(5);
 	doc_trade6000Mile.innerHTML = a_trade6000;
 	doc_mileReward.innerHTML = a_mileReward;
 	doc_maxSlug.innerHTML = a_maxSlug;
@@ -534,14 +534,14 @@ function updateMaxSlug(){
 //Current cost for buying slugs
 function updateBuySlugCost(){
 	ComputeSlugCost(true, function(result) {
-		a_buyCost =	formatEthValue2(web3.fromWei(result,'ether'));
+		a_buyCost =	web3.fromWei(result,'ether');
 	});
 }
 
 //Current cost for getting slugs through time
 function updateGetSlugCost(){
 	ComputeSlugCost(false, function(result) {
-		a_getCost =	formatEthValue2(web3.fromWei(result,'ether'));
+		a_getCost =	web3.fromWei(result,'ether');
 	});
 }
 
@@ -572,7 +572,7 @@ function canTradeMile(){
 
 //Set buy field to hijack requirement
 function setDriveBuy(){
-	document.getElementById('fieldBuy').value = parseFloat(a_buyCost * 200 + 0.0001).toFixed(4);
+	document.getElementById('fieldBuy').value = parseFloat(a_buyCost * 200 + 0.00001).toFixed(5);
 }
 
 //Player input on buy
