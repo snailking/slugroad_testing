@@ -69,6 +69,15 @@ function showModal(_modal){
 	_modal.style.display = "block";
 }
 
+// Check for time warp then show modal, for round-related actions
+function checkWarpThenShowModal(_modal){
+	if(s_hyperState == 2){
+		warp_modal.style.display = "block";
+	} else {
+		_modal.style.display = "block";
+	}
+}
+
 // Close then show modal
 function closeThenShowModal(_modal){
 	CloseModal();

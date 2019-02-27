@@ -95,21 +95,21 @@
 			<div class="">
 				<div class="row">
 					<div class="col-sm">
-						<button class="btn btn-lg btn-info" onclick="showModal(buy_modal)">BUY SLUGS</button>
+						<button class="btn btn-lg btn-info" onclick="checkWarpThenShowModal(buy_modal)">BUY SLUGS</button>
 						<h5 class="black-shadow">200 slugs for <span id="buy200">?.???</span> ETH</h5>
 						<br>
 					</div>
 					<div class="col-sm">
-						<button class="btn btn-lg btn-info" onclick="showModal(skip_modal)">SKIP AHEAD</button>
+						<button class="btn btn-lg btn-info" onclick="checkWarpThenShowModal(skip_modal)">SKIP AHEAD</button>
 						<h5 class="black-shadow">200 slugs for <span id="time200">?.???</span> ETH</h5>
 						<br>
 					</div>
 					<div class="col-sm">
-						<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="showModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5></span>
+						<span id="actionstate"><button type="button" class="btn btn-lg btn-info" onclick="checkWarpThenShowModal(throw_modal)">THROW SLUGS</button><h5 class="black-shadow">Sacrifice 200 slugs</h5></span>
 						<br>
 					</div>
 					<div class="col-sm">
-						<button class="btn btn-lg btn-info" onclick="showModal(trade_modal)">TRADE MILES</button>
+						<button class="btn btn-lg btn-info" onclick="checkWarpThenShowModal(trade_modal)">TRADE MILES</button>
 						<h5 class="black-shadow">For every 6000 miles, get <span id="trade6000mile">?.???</span> ETH</h5>
 						<br>
 					</div>
@@ -259,8 +259,9 @@
 		<div id="warp_modal" class="modal">
 			<div class="info2 modal-content">
 				<div class="img-border" align="center">
-					<h1 class="black-shadow">TIME WARP</h2><br>
+					<h1 class="black-shadow">TIME WARP READY!</h2><br>
 					<div class="info padding img-border2">
+						<h5>All other actions are disabled until the Time Warp.</h5>
 						<h5>Initiate the Time Warp to enter Loop <span id="nextloop">?</span></h5>
 						<br>
 						<h5>Timer resets to 7 days, and you become the Driver.</h5>
@@ -623,6 +624,24 @@
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
 						<button type="button" class="btn btn-info" onclick="closeThenShowModal(snailthrone_modal)">SnailThrone?</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- TIME WARP READY MODAL -->
+		<div id="paythrone_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">SEND TRIBUTE</h2><br>
+					<div class="info2 padding img-border2" align="center">
+						<h4>Send the current ThronePot to the SnailThrone.</h5>
+						<h5>SnailThrone holders will be rewarded in the form of dividends.</h5>
+						<br>
+						<h4>Sending the ThronePot is an action available to everyone, and doesn't affect your personal rewards.</h4>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="closeThenFunc(webPayThrone)">SEND TRIBUTE</button>
+						<a href="https://snailking.github.io/snailthrone"><button type="button" class="btn btn-info">GO TO SNAILTHRONE</button></a>
 					</div>
 				</div>
 			</div>
