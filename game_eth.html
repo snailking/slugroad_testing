@@ -284,8 +284,23 @@
 						<h5>Miles remaining after trade: <span id="playermileafter">464</span></h5>
 					</div>
 					<div class="container" align="center">
-						<span id="cantrademile"><button class="btn btn-lg btn-info" onclick="closeThenFunc(webTradeMile)">TRADE MILES</button></span>
+						<span id="cantrademile"><button class="btn btn-lg btn-info" onclick="closeThenFunc(checkIfDriver)">TRADE MILES</button></span>
 						<button class="btn btn-lg btn-info" onclick="CloseModal()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CANT TRADE MODAL -->
+		<div id="cant_trade_modal" class="modal">
+			<div class="info2 modal-content">
+				<div class="img-border" align="center">
+					<h1 class="black-shadow">CAN'T TRADE MILES WHILE DRIVING!</h2><br>
+					<div class="info padding img-border2">
+						<h5>Responsible Slugs drive safely.</h5>
+						<h5>Please pull over before you trade your miles.</h5>
+					</div>
+					<div class="container" align="center">
+						<button class="btn btn-lg btn-info" onclick="CloseModal()">Got it!</button>
 					</div>
 				</div>
 			</div>

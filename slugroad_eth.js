@@ -90,6 +90,15 @@ function closeThenFunc(_func){
 	_func();
 }
 
+// Check if driver for trade modal
+function checkIfDriver(){
+	if(m_account == a_driver){
+		showModal(cant_trade_modal);
+	} else {
+		showModal(trade_modal);
+	}
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	for(i = 0; i < modalArray.length; i++){
