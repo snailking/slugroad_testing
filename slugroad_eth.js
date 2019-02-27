@@ -188,9 +188,9 @@ var doc_canTradeMile = document.getElementById('cantrademile');
 
 /* UTILITIES */
 
-//Truncates value to 3 decimals
+//Truncates value to 4 decimals
 function formatEthValue(_value){
-    return parseFloat(parseFloat(_value).toFixed(3));
+    return parseFloat(parseFloat(_value).toFixed(4));
 }
 
 //Truncates value to 6 decimals
@@ -564,7 +564,7 @@ function updateTrade6000Reward(){
 //Current reward for trading player miles
 function updateMileReward(){
 	ComputeMileReward(parseInt(a_playerMile / 6000), function(result) {
-		a_mileReward = formatEthValue2(web3.fromWei(result,'ether'));
+		a_mileReward = parseFloat(web3.fromWei(result,'ether')).toFixed(8);
 	});
 }
 
