@@ -81,7 +81,7 @@
 						<img src="img/slug.png" class="pulse" height="32px" onclick="showModal(slug_modal)"> <h5 style="display: inline-block;"><span id="playerslug">?????</span></h5> 
 					</div>
 					<div class="col-sm img-border2 info">
-						<img src="img/ether.png" class="pulse" height="32px" onclick="showModal(ether_modal)"> <h5 style="display: inline-block;"><span id="playerreward">?.???</span></h5>
+						<img src="img/poa_ball.png" class="pulse" height="32px" onclick="showModal(ether_modal)"> <h5 style="display: inline-block;"><span id="playerreward">?.???</span></h5>
 					</div>
 					<div class="col-sm img-border2 info">
 						<img src="img/road.png" class="pulse" height="32px" onclick="showModal(road_modal)"> <h5 style="display: inline-block;"><span id="playermile">????</span></h5>
@@ -164,14 +164,15 @@
 								<h5>Cost per slug: <span id="buyCost">?</span> POA</h5>
 							</div>
 							<div class="col-sm">
-								<h5>Spend: <input type="text" id="fieldBuy" value="0.1" size="3"> POA</h5>
+								<h5>Spend: <input type="text" id="fieldBuy" value="0.1" size="3"> POA</h5>  
 							</div>
 							<div class="col-sm">
 								<h5>You will get: <span id="fieldBuySlug">200</span> Slugs</h5>
 							</div>
 						</div>
 						<br>
-						<h5>Buy at least 200 Slugs to become the Driver.</h5>
+						<h5 style="display: inline-block;">Buy at least 200 Slugs to become the Driver.</h5> <button onclick="setDriveBuy()">HIJACK</button>
+						<h5>Maximum buy: 500 POA</h5>
 					</div>
 					<div class="container" align="center">
 						<button class="btn btn-lg btn-info" onclick="closeThenFunc(webBuySlug)">BUY SLUGS</button>
@@ -601,6 +602,21 @@
 						<h5>Slugs Alive: total number of Slugs bought and currently alive</h5>
 						<h5>Contract Balance: total number of ether in contract</h5>
 						<h5>Slug Pot: reserve pot to sustain the loopChest. On a new Loop, half of it feeds the loopChest.</h5>
+					</div>
+					<div class="container" align="center">
+						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- NETWORK MODAL -->
+		<div id="network_modal" class="modal">
+			<div class="info modal-content">
+				<div class="img-border">
+					<h1 class="black-shadow">WRONG NETWORK</h2><br>
+					<div class="info2 padding img-border2">
+						<h5>You're on the POA track.</h5>
+						<h5>Switch to POA Network in your web3 extension to access this track.</h5>
 					</div>
 					<div class="container" align="center">
 						<button type="button" class="btn btn-info" onclick="CloseModal()">Got it!</button>

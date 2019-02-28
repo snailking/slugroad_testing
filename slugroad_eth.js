@@ -10,6 +10,14 @@ window.addEventListener('load', async () => {
         try {
             // Request account access if needed
             await ethereum.enable();
+			web3.version.getNetwork(function(error, result) {
+				if (!error) {
+					if (result != "1") {
+						console.log("Error: you must be on Ethereum Mainnet to use this website.");
+						showModal(network_modal);
+					}
+				}
+			});
             // Acccounts now exposed
             //web3.eth.sendTransaction({/* ... */});
         } catch (error) {
@@ -31,6 +39,7 @@ window.addEventListener('load', async () => {
 /* MODAL */
 
 // Get modals
+var network_modal = document.getElementById("network_modal");
 var car_1_modal = document.getElementById("car_1_modal");
 var car_2_modal = document.getElementById("car_2_modal");
 var car_3_modal = document.getElementById("car_3_modal");
@@ -55,7 +64,7 @@ var paythrone_modal = document.getElementById("paythrone_modal");
 var warp_modal = document.getElementById("warp_modal");
  
 // Array to close them all
-var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal, warp_modal];
+var modalArray = [network_modal, car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal, warp_modal];
 
 // Close modal on game info
 function CloseModal() {

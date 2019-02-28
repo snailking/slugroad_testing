@@ -1,7 +1,6 @@
 var contractAddress="0x04E5cBB5e69394A4a69c0D403087dd200Fc8Daaf"; //POA "test" (on core) v1
 
 //-- WEB3 DETECTION --//
-var web3;
 
 window.addEventListener('load', async () => {
     // Modern dapp browsers...
@@ -10,6 +9,14 @@ window.addEventListener('load', async () => {
         try {
             // Request account access if needed
             await ethereum.enable();
+			web3.version.getNetwork(function(error, result) {
+				if (!error) {
+					if (result != "99") {
+						console.log("Error: you must be on POA Network to use this website.");
+						showModal(network_modal);
+					}
+				}
+			});
             // Acccounts now exposed
             //web3.eth.sendTransaction({/* ... */});
         } catch (error) {
@@ -31,6 +38,7 @@ window.addEventListener('load', async () => {
 /* MODAL */
 
 // Get modals
+var network_modal = document.getElementById("network_modal");
 var car_1_modal = document.getElementById("car_1_modal");
 var car_2_modal = document.getElementById("car_2_modal");
 var car_3_modal = document.getElementById("car_3_modal");
@@ -53,7 +61,7 @@ var math_modal = document.getElementById("math_modal");
 var warp_modal = document.getElementById("warp_modal");
  
 // Array to close them all
-var modalArray = [car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, warp_modal];
+var modalArray = [network_modal, car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, warp_modal];
 
 // Close modal on game info
 function CloseModal() {
@@ -92,7 +100,7 @@ window.onclick = function(event) {
 
 var timeLaunch = 1548516649;
 var launchBlock = 7129676;
-
+var blockSpan = 5; //5 seconds blocks on POA core
 var startBlock = 0;
 var ranLog = false;
 
@@ -208,7 +216,7 @@ function date24() {
 
 //Get timestamp for log
 function dateLog(_blockNumber) {
-	d = new Date((timeLaunch + ((_blockNumber - launchBlock) * 16)) * 1000);
+	d = new Date((timeLaunch + ((_blockNumber - launchBlock) * blockSpan)) * 1000);
 	////////console.log(d);
 	datetext = d.toTimeString();
 	datetext = datetext.split(' ')[0];
@@ -1383,44 +1391,7 @@ function starter(callback){
 }
 
 /* EVENT WATCH */
-/*
-//Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice
-var storetxhash = [];
-var storeeventname = [];
 
-//Check equivalency
-function checkHash(txarray, txhash, eventname) {
-	var i = 0;
-	var _name = 0;
-	do {
-		if(storeeventname[i] == eventname) {
-			_name = 1;
-		}
-		i++;
-	}
-	while(i < storeeventname.length);
-	if(_name == 1) {
-		var j = 0;
-		do {
-			if(txarray[j] == txhash) {
-				return 0;
-			}
-			j++;
-		}
-		while(j < txarray.length);
-	}
-	//Add new tx hash and new event name
-	txarray.push(txhash);
-	storeeventname.push(eventname);
-	//Remove first tx hash if there's more than 10 hashes saved
-	if(txarray.length > 10) {
-		txarray.shift();
-	}
-	if(storeeventname.length > 10) {
-		storeeventname.shift();
-	}
-}
-*/
 //Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice (metamask?)
 var store_hash = [];
 var store_event = [];
