@@ -296,7 +296,6 @@ function updateText(){
 	doc_nextLoop.innerHTML = parseInt(a_loop + 1);
 	doc_loopChest.innerHTML = formatEthValue(a_loopChest);
 	doc_slugBank.innerHTML = a_slugBank;
-	doc_thronePot.innerHTML = a_thronePot;
 	doc_buyCost.innerHTML = parseFloat(a_buyCost).toFixed(8);
 	doc_buy200.innerHTML = parseFloat(a_buyCost * 200).toFixed(5);
 	doc_playerSlug.innerHTML = a_playerSlug;
