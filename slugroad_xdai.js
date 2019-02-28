@@ -39,7 +39,7 @@ window.addEventListener('load', async () => {
 /* MODAL */
 
 // Get modals
-var network_modal = document.getElementByid("network_modal");
+var network_modal = document.getElementById("network_modal");
 var car_1_modal = document.getElementById("car_1_modal");
 var car_2_modal = document.getElementById("car_2_modal");
 var car_3_modal = document.getElementById("car_3_modal");
