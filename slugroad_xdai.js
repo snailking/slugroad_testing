@@ -7,18 +7,34 @@ window.addEventListener('load', async () => {
     // Modern dapp browsers...
     if (window.ethereum) {
         window.web3 = new Web3(ethereum);
-        try {
-            // Request account access if needed
-            await ethereum.enable();
-            // Acccounts now exposed
-            //web3.eth.sendTransaction({/* ... */});
-        } catch (error) {
-            // User denied account access...
-        }
+		web3.version.getNetwork(function(error, result) {
+            if (!error) {
+                if (result == "100") {
+					try {
+						// Request account access if needed
+						await ethereum.enable();
+						// Acccounts now exposed
+						//web3.eth.sendTransaction({/* ... */});
+					} catch (error) {
+						// User denied account access...
+					}
+                } else {
+                    console.log("Error: you must be on xDai Chain to use this website.");
+                }
+            }
+        });   
     }
     // Legacy dapp browsers...
     else if (window.web3) {
         window.web3 = new Web3(web3.currentProvider);
+		web3.version.getNetwork(function(error, result) {
+            if (!error) {
+                if (result == "100") {
+                } else {
+                    console.log("Error: you must be on xDai Chain to use this website.");
+                }
+            }
+        });
         // Acccounts always exposed
         //web3.eth.sendTransaction({/* ... */});
     }
