@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
 			web3.version.getNetwork(function(error, result) {
 				if (!error) {
 					if (result != "100") {
-						console.log("Error: you must be on Ropsten Network to use this website.");
+						console.log("Error: you must be on xDai Chain to use this website.");
 						showModal(network_modal);
 					}
 				}
@@ -53,18 +53,16 @@ var ether_modal = document.getElementById("ether_modal");
 var road_modal = document.getElementById("road_modal");
 var event_modal = document.getElementById("event_modal");
 var stats_modal = document.getElementById("stats_modal");
-var snailthrone_modal = document.getElementById("snailthrone_modal");
 var buy_modal = document.getElementById("buy_modal");
 var skip_modal = document.getElementById("skip_modal");
 var throw_modal = document.getElementById("throw_modal");
 var jump_modal = document.getElementById("jump_modal");
 var trade_modal = document.getElementById("trade_modal");
 var math_modal = document.getElementById("math_modal");
-var paythrone_modal = document.getElementById("paythrone_modal");
 var warp_modal = document.getElementById("warp_modal");
  
 // Array to close them all
-var modalArray = [network_modal, car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, snailthrone_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, paythrone_modal, warp_modal];
+var modalArray = [network_modal, car_1_modal, car_2_modal, car_3_modal, car_4_modal, help_1_modal, help_2_modal, help_3_modal, help_4_modal, slug_modal, ether_modal, road_modal, event_modal, stats_modal, buy_modal, skip_modal, throw_modal, jump_modal, trade_modal, math_modal, warp_modal];
 
 // Close modal on game info
 function CloseModal() {
